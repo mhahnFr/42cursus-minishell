@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <stdbool.h>
+#include <unistd.h>
 
-#include "unistd.h"
+#include "command.h"
 
 static void	print_header_part2(void)
 {
@@ -55,7 +56,7 @@ static void	print_header(void)
 	print_header_part2();
 }
 
-int	main(void)
+int	main(int argcnt, char **args, char **envp)
 {
 	char	*line;
 
@@ -63,6 +64,7 @@ int	main(void)
 	while (true)
 	{
 		line = readline("");
+		//parse(line, cmd, envp);
 	}
 	return (0);
 }
