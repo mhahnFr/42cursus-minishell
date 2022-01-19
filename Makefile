@@ -14,7 +14,10 @@ H_O = $(patsubst %.h,%.gch,$(HDR))
 OBJ = $(patsubst %.c,%.o,$(SRC))
 
 # The flags to be used during compilation.
-CFLAGS = -Wall -Werror -Wextra -I. -I$(HOME)/.brew/opt/readline/include -g #-Ofast
+CFLAGS = -Wall -Werror -Wextra -g #-Ofast
+
+# The includes for the project.
+INC = -I. -I$(HOME)/.brew/opt/readline/include
 
 # The flags to be used during linking.
 LDFLAGS = -L$(HOME)/.brew/opt/readline/lib -lreadline
