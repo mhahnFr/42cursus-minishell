@@ -2,7 +2,7 @@
 NAME = minishell
 
 # The source files.
-SRC = 
+SRC = main.c
 
 # The header files.
 HDR = 
@@ -25,7 +25,11 @@ all: $(NAME)
 
 # Runs the norm checker on all registered files.
 norm:
-	norminette $(SRC) $(HDR)
+	norminette $(SRC) $(HDR) | grep :
+
+# Runs the executable.
+run: $(NAME)
+	./$(NAME)
 
 # Makes the bonus part of the project.
 bonus: all
@@ -55,4 +59,4 @@ fclean: clean
 re: fclean all
 
 # A list with all always dirty rules.
-.PHONY: all clean flcean re bonus norm
+.PHONY: all clean flcean re bonus norm run
