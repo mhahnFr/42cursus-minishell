@@ -2,10 +2,10 @@
 NAME = minishell
 
 # The source files.
-SRC = main.c
+SRC = main.c command.c
 
 # The header files.
-HDR = 
+HDR = command.h
 
 # The compiled header files.
 H_O = $(patsubst %.h,%.gch,$(HDR))
