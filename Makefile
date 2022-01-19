@@ -23,6 +23,10 @@ LDFLAGS = -I.
 # Makes whatever is necessary.
 all: $(NAME)
 
+# Runs the norm checker on all registered files.
+norm:
+	norminette $(SRC) $(HDR)
+
 # Makes the bonus part of the project.
 bonus: all
 
@@ -51,4 +55,4 @@ fclean: clean
 re: fclean all
 
 # A list with all always dirty rules.
-.PHONY: all clean flcean re bonus
+.PHONY: all clean flcean re bonus norm
