@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #include "command.h"
@@ -56,7 +57,10 @@ static void	print_header(void)
 	print_header_part2();
 }
 
-int	main(int argcnt, char **args, char **envp)
+int	main(
+		__attribute__((unused)) int argc,
+		__attribute__((unused)) char **args,
+		__attribute__((unused)) char **envp)
 {
 	char	*line;
 
@@ -65,6 +69,10 @@ int	main(int argcnt, char **args, char **envp)
 	{
 		line = readline("");
 		//parse(line, cmd, envp);
+		if (line == NULL)
+			break ;
+		free(line);
 	}
+	free(line);
 	return (0);
 }
