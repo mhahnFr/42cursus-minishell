@@ -23,10 +23,7 @@
  */
 typedef struct s_list
 {
-	/* A pointer to the content. */
 	void			*content;
-
-	/* A pointer to the next node in the list. */
 	struct s_list	*next;
 }	t_list;
 
