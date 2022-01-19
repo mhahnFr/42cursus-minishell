@@ -25,6 +25,8 @@ static void	print_header_part2(void)
 		"=/   # \\\\  *==*  #  \\\\#  #  \\\\#\n", 80);
 	write(1, "                        #                       "
 		"                               \n", 80);
+	write(1, "\nMade by nimichi (github.com/nimichi) and mhahn"
+		"Fr (github.com/mhahnFr).\n", 72);
 }
 
 static void	print_header(void)
