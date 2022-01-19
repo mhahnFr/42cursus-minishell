@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <readline/readline.h>
+
 #include "unistd.h"
 
 static void	print_header_part2(void)
@@ -52,5 +55,6 @@ static void	print_header(void)
 int	main(void)
 {
 	print_header();
+	readline("");
 	return (0);
 }
