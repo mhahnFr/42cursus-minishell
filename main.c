@@ -62,17 +62,18 @@ int	main(
 		__attribute__((unused)) char **args,
 		__attribute__((unused)) char **envp)
 {
-	char	*line;
+	char			*line;
+	struct s_cmd	cmd;
 
 	print_header();
 	while (true)
 	{
-		line = readline("");
-		//parse(line, cmd, envp);
+		line = readline("42 HN % ");
 		if (line == NULL)
 			break ;
+		cmd_create(&cmd);
+		//parse(line, cmd, envp);
 		free(line);
 	}
-	free(line);
 	return (0);
 }

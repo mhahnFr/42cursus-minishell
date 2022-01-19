@@ -5,7 +5,7 @@ NAME = minishell
 SRC = ./main.c ./command.c
 
 # The header files.
-HDR = ./command.h
+HDR = ./command.h ./parser.h
 
 # The path to the libft.
 LFT_P = ./libft
