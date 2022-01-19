@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <readline/readline.h>
+#include <stdbool.h>
 
 #include "unistd.h"
 
@@ -56,7 +57,12 @@ static void	print_header(void)
 
 int	main(void)
 {
+	char	*line;
+
 	print_header();
-	readline("");
+	while (true)
+	{
+		line = readline("");
+	}
 	return (0);
 }
