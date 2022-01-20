@@ -1,117 +1,76 @@
-int	cnt_untl(char *string, char stopchar)
+#include <unistd.h>
+#include <stdlib.h>
+
+#include "copy.h"
+#include "command.h"
+
+void	parse_check_sequence(char *string)
 {
-	int	i;
+	int		i;
+	char	cha;
 
-	i = 0;
-	while (string[i] != stopchar && string[i] != '\0')
-		i++;
-	return (i);
-}
-
-int	cnt_args(char *string, char separator)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (string[j] != '\0')
-	{
-		if ((j == 0 || string[j] == separator)
-			&& string[j + 1] != '\0' && string[j + 1] != separator)
-			i++;
-		j++;
-	}
-}
-
-char	*get_arg(char *string, char separator, int arg_num)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (arg_num == 0)
-	{
-		while (string[i] == separator)
-			i++;
-		return (string[i]);
-	}
 	while (string[i] != '\0')
 	{
-		if ((i == 0 || string[i] == separator)
-			&& string[i + 1] != '\0' && string[i + 1] != separator)
+		cha = string[i];
+		if (cha == '\'' || cha == '\"')
 		{
-			if (arg_num != 0)
-				arg_num--;
-			else
-				return (string[i + 1]);
+			while (string[i] != cha)
+			{
+				if (string[i] == '\0')
+				{
+					write(2, "Parse: Parse Error", 18);
+					exit(-1);
+				}
+				i++;
+			}
 		}
 		i++;
 	}
-	return (NULL);
 }
 
-void	parse(char *str, t_cmd *cmd, char **envp)
+int	parse_cnt_args(char *string)
 {
-	int	i;
+	int		cnt;
+	int		i;
+	char	cha;
 
-	i = cnt_args(str, ' ');
-	
-	cmd->infile
-}
-
-
-int	pipex_utils_cnt(char *str, char divider, int mode)
-{
-	int	i;
-	int	j;
-
+	cnt = 0;
 	i = 0;
-	if (mode == 2)
-		while (str[i] != divider && str[i] != '\0')
-			i++;
-	else if (mode == 1)
-		while (str[i] == divider)
-			i++;
-	else
+	while (string[i] != '\0')
 	{
-		j = 0;
-		while (str[j] != '\0')
-		{
-			if ((j == 0 || str[j] == divider)
-				&& str[j + 1] != '\0' && str[j + 1] != divider)
+		if ((i == 0 || string[i] == ' ')
+			&& string[i + 1] != '\0' && string[i + 1] != ' ')
+			cnt++;
+		cha = string[i];
+		if (cha == '\'' || cha == "\"")
+			while (string[i] != cha)
 				i++;
-			j++;
-		}
+		i++;
 	}
-	return (i);
+	return (cnt);
 }
 
-char	*cmd_w_path(t_cmd *cmd, char **envp)
+void	parse_block(char *string)
 {
-	int		len[2];
-	char	*ret;
+	int		arg_cnt;
+	char	**args;
+	int		i;
+	int		j;
 
-	len[0] = pipex_utils_cnt(*nargs[0], ' ', 2);
-	len[1] = pipex_utils_cnt(envs, ':', 2);
-	ret = malloc(sizeof(char) * (len[0] + len[1] + 2));
-	if (ret == NULL)
-		pipex_free(nargs, "malloc", 0);
-	pipex_utils_combine(&ret, envs, *nargs[0], len);
-	if (access(ret, X_OK))
+	arg_cnt = parse_cnt_args(string);
+	args = malloc(sizeof(char *) * (arg_cnt + 1));
+	if (args == NULL)
+		free_cmd();
+	j = 0;
+	while (i != arg_cnt)
 	{
-		free(ret);
-		if (envs[len[1]] != '\0')
-			ret = pipex_get_cmd(nargs, &envs[len[1]] + 1);
-		else
-			pipex_free(nargs, *nargs[0], 2);
+		j = j + copy_arg(&string[j], args[i]);
+		args[i + 1] = NULL;
 	}
-	return (ret);
 }
 
-void	execute(t_cmd *cmd, char **envp)
+void	parse(char *string)
 {
-	execve(pipex_get_cmd(cmd.cmd[0], envp), cmd.cmd, envp);
-
+	parse_check_sequence(string);
+	parse_block(string);
 }
