@@ -2,7 +2,7 @@
 NAME = minishell
 
 # The source files.
-SRC = ./main.c ./command.c ./signals.c ./signals_execution.c                  \
+SRC = ./main.c command.c ./signals.c ./signals_execution.c                  \
 	  ./signals_default.c ./syntax.c ./utils.c
 
 # The header files.
@@ -13,11 +13,14 @@ LFT_P = ./libft
 
 LFT_D = $(LFT_P)/libft.a
 
+# the path to the object files.
+O_P = ./bin
+
 # The compiled header files.
-H_O = $(patsubst %.h,%.gch,$(HDR))
+#H_O = $(patsubst %.h,$(O_P)/%.gch,$(HDR))
 
 # The compiled source files.
-OBJ = $(patsubst %.c,%.o,$(SRC))
+OBJ = $(addprefix $(O_P)/,$(SRC:.c=.o))
 
 # The flags to be used during compilation.
 CFLAGS = -Wall -Werror -Wextra $(INC) -g #-Ofast
@@ -48,16 +51,16 @@ $(LFT_D):
 bonus: all
 
 # Links the executable.
-$(NAME): $(OBJ) $(LFT_D)
+$(NAME): $(O_P) $(OBJ) $(LFT_D)
 	$(CC) $(LDFLAGS) $(OBJ) -o $(NAME)
 
 # Compiles each source file individually.
-%.o: %.c $(H_O)
+$(O_P)/%.o: %.c $(HDR)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-# Compiles each header file individually.
-%.gch: %.h
-	$(CC) $(CFLAGS) -c -o $@ $<
+# Creates the folder for the object files.
+$(O_P):
+	mkdir $(O_P)
 
 # Removes all temporary files.
 clean:
@@ -68,6 +71,7 @@ clean:
 # Removes everything created by this makefile.
 fclean: clean
 	- $(RM) $(NAME)
+	- $(RM) -r $(O_P)
 	- $(MAKE) -C $(LFT_P) fclean
 
 # Removes all files created by this makefile and recompiles the project.
