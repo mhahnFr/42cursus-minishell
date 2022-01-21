@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include "libft.h"
 
 #include "minishell.h"
 #include "command.h"
 #include "signals.h"
 #include "syntax.h"
+#include "utils.h"
 
 static void	print_header_part2(void)
 {
@@ -60,10 +64,7 @@ static void	print_header(void)
 	print_header_part2();
 }
 
-int	main(
-		__attribute__((unused)) int argc,
-		__attribute__((unused)) char **args,
-		__attribute__((unused)) char **envp)
+int	main(void)
 {
 	char			*line;
 	struct s_cmd	cmd;
@@ -74,11 +75,15 @@ int	main(
 		signals_default();
 		line = readline(PROMPT " ");
 		if (line == NULL)
-			break ;
-		if (syntax_check(line) == 0)
+			break ; // TODO Call the exit builtin
+		if (!utils_only_whitespace(line))
 		{
-			cmd_create(&cmd);
-			//parse(line, cmd, envp);
+			add_history(line);
+			if (syntax_check(line) == 0)
+			{
+				cmd_create(&cmd);
+				//parse(line, cmd, envp);
+			}
 		}
 		free(line);
 	}

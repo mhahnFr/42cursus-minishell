@@ -2,10 +2,11 @@
 NAME = minishell
 
 # The source files.
-SRC = ./main.c ./command.c ./signals.c ./signals_execution.c ./signals_default.c ./syntax.c
+SRC = ./main.c ./command.c ./signals.c ./signals_execution.c                  \
+	  ./signals_default.c ./syntax.c ./utils.c
 
 # The header files.
-HDR = ./command.h ./parser.h ./signals.h ./syntax.h
+HDR = ./command.h ./parser.h ./signals.h ./syntax.h ./utils.h
 
 # The path to the libft.
 LFT_P = ./libft
