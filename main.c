@@ -69,9 +69,9 @@ int	main(
 	struct s_cmd	cmd;
 
 	print_header();
-	signals_default();
 	while (true)
 	{
+		signals_default();
 		line = readline(PROMPT " ");
 		if (line == NULL)
 			break ;
