@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include "command.h"
+#include "signals.h"
 
 static void	print_header_part2(void)
 {
@@ -66,6 +67,7 @@ int	main(
 	struct s_cmd	cmd;
 
 	print_header();
+	signals_default();
 	while (true)
 	{
 		line = readline("42 HN % ");
