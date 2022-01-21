@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "minishell.h"
 #include "command.h"
 #include "signals.h"
 #include "syntax.h"
@@ -71,7 +72,7 @@ int	main(
 	signals_default();
 	while (true)
 	{
-		line = readline("42 HN % ");
+		line = readline(PROMPT " ");
 		if (line == NULL)
 			break ;
 		if (syntax_check(line) == 0)
