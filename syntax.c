@@ -17,10 +17,7 @@ int	syntax_quotation_marks(char *string)
 			while (string[i] != cha)
 			{
 				if (string[i] == '\0')
-				{
-					write(2, "minishell: synatx error\n", 24);
 					return (-1);
-				}
 				i++;
 			}
 		}
@@ -51,9 +48,7 @@ int	syntax_parenthesis(char *string)
 			break ;
 		i++;
 	}
-	if (open != 0)
-		write(2, "minishell: synatx error\n", 24);
-	else
+	if (open == 0)
 		return (0);
 	return (-1);
 }
@@ -77,12 +72,35 @@ int	syntax_guillemets(char *string)
 				i++;
 			while (string[i] == ' ')
 				i++;
-			if (string[i] == '<' || string[i] == '>' || string[i] == '\n' || string[i] == '\0')
-			{
-				write(2, "minishell: synatx error\n", 24);
+			if (string[i] == '<' || string[i] == '>' || string[i] == '\n' || string[i] == '\0'
+				|| string[i] == '|' || string[i] == '&')
 				return(-1);
-			}
 		}
+		i++;
+	}
+	return (0);
+}
+
+int	syntax_followup(char *string)
+{
+	int	i;
+
+	if (string[0] == '|' || string[0] == '&')
+		return (-1);
+	i = 0;
+	while (string[i] != '\0')
+	{
+		if ((string[i] == '|' && string[i + 1] == '|')
+			|| (string[i] == '|' && string[i + 1] == ' ')
+			|| (string[i] == '&' && string[i + 1] == '&')
+			|| (string[i] == '&' && string[i + 1] == ' '))
+			{
+				i = i + 2;
+				while (string[i] == ' ')
+					i++;
+				if (string[i] == '|' || string[i] == '&' || string[i] == '\n' || string[i] == '\0')
+					return (-1);
+			}
 		i++;
 	}
 	return (0);
@@ -91,11 +109,18 @@ int	syntax_guillemets(char *string)
 
 int	syntax_check(char *string)
 {
+	int i;
+
+	i = 0;
 	if (syntax_quotation_marks(string) == -1)
-		return (-1);
+		i = -1;
 	if (syntax_parenthesis(string) == -1)
-		return (-1);
+		i = -1;
 	if (syntax_guillemets(string) == -1)
-		return (-1);
-	return (0);
+		i = -1;
+	if (syntax_followup(string) == -1)
+		i = -1;
+	if (i == -1)
+		write(2, "minishell: synatx error\n", 24);
+	return (i);
 }
