@@ -72,9 +72,9 @@ int	syntax_guillemets(char *string)
 				i++;
 			while (string[i] == ' ')
 				i++;
-			if (string[i] == '<' || string[i] == '>' || string[i] == '\n' || string[i] == '\0'
-				|| string[i] == '|' || string[i] == '&')
-				return(-1);
+			if (string[i] == '<' || string[i] == '>' || string[i] == '\n'
+				|| string[i] == '\0' || string[i] == '|' || string[i] == '&')
+				return (-1);
 		}
 		i++;
 	}
@@ -94,22 +94,22 @@ int	syntax_followup(char *string)
 			|| (string[i] == '|' && string[i + 1] == ' ')
 			|| (string[i] == '&' && string[i + 1] == '&')
 			|| (string[i] == '&' && string[i + 1] == ' '))
-			{
-				i = i + 2;
-				while (string[i] == ' ')
-					i++;
-				if (string[i] == '|' || string[i] == '&' || string[i] == '\n' || string[i] == '\0')
-					return (-1);
-			}
+		{
+			i = i + 2;
+			while (string[i] == ' ')
+				i++;
+			if (string[i] == '|' || string[i] == '&'
+				|| string[i] == '\n' || string[i] == '\0')
+				return (-1);
+		}
 		i++;
 	}
 	return (0);
 }
 
-
 int	syntax_check(char *string)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (syntax_quotation_marks(string) == -1)
