@@ -6,6 +6,7 @@
 
 #include "command.h"
 #include "signals.h"
+#include "syntax.h"
 
 static void	print_header_part2(void)
 {
@@ -73,8 +74,11 @@ int	main(
 		line = readline("42 HN % ");
 		if (line == NULL)
 			break ;
-		cmd_create(&cmd);
-		//parse(line, cmd, envp);
+		if (syntax_check(line) == 0)
+		{
+			cmd_create(&cmd);
+			//parse(line, cmd, envp);
+		}
 		free(line);
 	}
 	return (0);
