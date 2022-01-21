@@ -1,5 +1,8 @@
 #include <unistd.h>
 
+#include "libft.h"
+
+#include "minishell.h"
 #include "syntax.h"
 
 int	syntax_quotation_marks(char *string)
@@ -121,6 +124,6 @@ int	syntax_check(char *string)
 	if (syntax_followup(string) == -1)
 		i = -1;
 	if (i == -1)
-		write(2, "minishell: synatx error\n", 24);
+		ft_putendl_fd(NAME ": syntax error", 2);
 	return (i);
 }
