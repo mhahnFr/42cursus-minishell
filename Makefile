@@ -2,22 +2,21 @@
 NAME = minishell
 
 # The source files.
-SRC = ./main.c command.c ./signals.c ./signals_execution.c                  \
-	  ./signals_default.c ./syntax.c ./utils.c
+SRC = ./main.c command.c ./signals.c ./signals_execution.c ./token_linked.c   \
+	  ./signals_default.c ./syntax.c ./utils.c ./tokenizer.c ./token.c
 
 # The header files.
-HDR = ./command.h ./parser.h ./signals.h ./syntax.h ./utils.h
+HDR = ./command.h ./parser.h ./signals.h ./syntax.h ./utils.h ./token.h       \
+	  ./token_type.h ./tokenizer.h
 
 # The path to the libft.
 LFT_P = ./libft
 
+# The full path to the libft.
 LFT_D = $(LFT_P)/libft.a
 
 # the path to the object files.
 O_P = ./bin
-
-# The compiled header files.
-#H_O = $(patsubst %.h,$(O_P)/%.gch,$(HDR))
 
 # The compiled source files.
 OBJ = $(addprefix $(O_P)/,$(SRC:.c=.o))
