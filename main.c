@@ -76,8 +76,8 @@ static void	print_header(void)
 
 int	main(void)
 {
-	char			*line;
 	struct s_token	*tokens;
+	char			*line;
 
 	print_header();
 	while (true)
