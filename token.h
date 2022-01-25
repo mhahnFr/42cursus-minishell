@@ -8,8 +8,13 @@
  * token, the type and the optional content.
  */
 struct s_token {
-	enum e_type		type;
-	void			*content;
+	char			p;
+	char			n;
+	struct s_list	*cmd;
+	struct s_list	*in;
+	struct s_list	*out;
+	int				result;
+	int				exit_status;
 	struct s_token	*previous;
 	struct s_token	*next;
 };
