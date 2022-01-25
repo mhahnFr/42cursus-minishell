@@ -11,6 +11,7 @@
 #include "command.h"
 #include "signals.h"
 #include "syntax.h"
+#include "tokenizer.h"
 #include "utils.h"
 
 static void	print_header_part2(void)
@@ -35,14 +36,14 @@ static void	print_header_part2(void)
 		"=/   # \\\\  *==*  #  \\\\#  #  \\\\#\n", 80);
 	write(1, "                        #                       "
 		"                               \n", 80);
-	write(1, "\nMade by nimichi (github.com/nimichi) and mhahn"
-		"Fr (github.com/mhahnFr).\n", 72);
+	write(1, "\nMade by \033[1;31mnimichi\033[1;0m (github.com/nimichi) and "
+		"\033[1;32mmhahnFr\033[1;0m (github.com/mhahnFr).\n\n", 99);
 }
 
 static void	print_header(void)
 {
-	write(1, "                /####/  #################       "
-		"                               \n", 80);
+	write(1, "\n                /####/  #################       "
+		"                               \n", 81);
 	write(1, "              /####/    #####/     ######       "
 		"                               \n", 80);
 	write(1, "            /####/      ###/       ######       "
@@ -67,7 +68,7 @@ static void	print_header(void)
 int	main(void)
 {
 	char			*line;
-	struct s_cmd	cmd;
+	struct s_token	*tokens;
 
 	print_header();
 	while (true)
@@ -81,8 +82,12 @@ int	main(void)
 			add_history(line);
 			if (syntax_check(line) == 0)
 			{
-				cmd_create(&cmd);
 				//parse(line, cmd, envp);
+				tokens = tokenize(line);
+				if (tokens != NULL)
+				{
+					//execute(tokens);
+				}
 			}
 		}
 		free(line);
