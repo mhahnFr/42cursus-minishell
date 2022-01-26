@@ -14,7 +14,8 @@ int	pipe_check(t_token *token)
 	i = 0;
 	prthcnt = 0;
 	qtm = ' ';
-	while ((token->strlen != -1 && (token->str)[i] != '\0') || i < token->strlen)
+	while ((token->strlen != -1 && (token->str)[i] != '\0')
+		|| i < token->strlen)
 	{
 		if ((token->str)[i] == '|')
 			return (i);
@@ -28,7 +29,7 @@ int	pipe_check(t_token *token)
 		}
 		i = i + skip_qtm_and_move(&(token->str)[i]);
 	}
-	return(0);
+	return (0);
 }
 
 int	pipe_func(t_token *token)

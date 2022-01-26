@@ -2,6 +2,7 @@
 # define PIPE_H
 
 # include "token.h"
+# include "tokenizer.h"
 
 /*
  * Checks if string has a pipe in current priority
