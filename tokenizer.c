@@ -19,6 +19,7 @@ int	tokenizer_apply_parenthesis(t_token *token)
 
 t_token	*tokenizer_apply_result(t_token *token, int res)
 {
+	res = 0;
 	token = NULL;
 	return (NULL);
 }
@@ -34,5 +35,6 @@ int	tokenizer_func(t_token *token)
 	if (check_parenthesis(token))
 		return (tokenizer_apply_parenthesis(token));
 	// res = parse_func(token);
+	res = 0;
 	return (tokenizer_func(tokenizer_apply_result(token, res)));
 }
