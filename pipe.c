@@ -1,5 +1,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "token.h"
 #include "tokenizer.h"
@@ -44,19 +45,23 @@ int	pipe_func(t_token *token)
 	if (child1 < 0)
 		return (-1); // TODO FREE TOKEN
 	if (0 == child1)
+	//if (1)
 	{
 		token->strlen = pipe_check(token);
 		token->outfd = pipe_fds[0];
 		tokenizer_func(token);
+		exit(-1);
 	}
 	child2 = fork();
 	if (child2 < 0)
 		return (-1); // TODO FREE TOKEN
 	if (0 == child2)
+	//if (1)
 	{
-		token->str = &(token->str)[pipe_check(token)];
+		token->str = &(token->str)[pipe_check(token) + 1];
 		token->strlen = token->strlen - pipe_check(token);
 		token->outfd = pipe_fds[0];
+		exit(-1);
 	}
 	waitpid(child1, NULL, 0); // TODO if NULL not needed remove include unistd
 	return (waitpid(child2, NULL, 0));

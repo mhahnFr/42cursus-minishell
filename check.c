@@ -4,12 +4,12 @@
 
 int	check_or_and(t_token *token)
 {
-	token = NULL;
+	(void)token;
 	return (0);
 }
 
 int	check_parenthesis(t_token *token)
 {
-	token = NULL;
+	(void)token;
 	return (0);
 }

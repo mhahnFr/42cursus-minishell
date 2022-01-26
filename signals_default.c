@@ -11,7 +11,7 @@ static void	signals_default_handler(int s)
 	if (s == SIGINT)
 	{
 		write(1, "\n", 1);
-		//rl_replace_line("", 1);
+		rl_replace_line("", 1);
 	}
 	rl_on_new_line();
 	rl_redisplay();

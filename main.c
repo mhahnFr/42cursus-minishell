@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "libft.h"
+#include "libft/libft.h"
 
 #include "minishell.h"
 #include "command.h"
@@ -84,6 +84,7 @@ int	main(void)
 	{
 		signals_default();
 		line = readline(PROMPT " ");
+		//line = ft_strdup("hello|echj");
 		if (line == NULL)
 			break ; // TODO Call the exit builtin
 		if (!utils_only_whitespace(line))
