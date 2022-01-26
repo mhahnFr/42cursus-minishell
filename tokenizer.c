@@ -33,11 +33,9 @@ int	tokenizer_func(t_token *token)
 	// 	return (tokenizer_func(tokenizer_apply_or_and(token)));
 	if (pipe_check(token))
 		return (pipe_func(token));
-	if (check_parenthesis(token))
-		return (tokenizer_apply_parenthesis(token));
+	// if (check_parenthesis(token))
+	// 	return (tokenizer_apply_parenthesis(token));
 	// res = parse_func(token);
-	write (1, token->str, token->strlen);
-	write (1, "\n", 1);
 	res = 0;
 	return (1);
 	//return (tokenizer_func(tokenizer_apply_result(token, res)));

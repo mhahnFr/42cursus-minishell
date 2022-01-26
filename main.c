@@ -85,6 +85,7 @@ int	main(void)
 		signals_default();
 		line = readline(PROMPT " ");
 		//line = ft_strdup("hello|echj");
+		token.strlen = ft_strlen(line);
 		if (line == NULL)
 			break ; // TODO Call the exit builtin
 		if (!utils_only_whitespace(line))

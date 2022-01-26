@@ -15,8 +15,7 @@ int	pipe_check(t_token *token)
 	i = 0;
 	prthcnt = 0;
 	qtm = ' ';
-	while ((token->strlen != -1 && (token->str)[i] != '\0')
-		|| i < token->strlen)
+	while (i < token->strlen)
 	{
 		if ((token->str)[i] == '|')
 			return (i);
@@ -49,6 +48,8 @@ int	pipe_func(t_token *token)
 	{
 		token->strlen = pipe_check(token);
 		token->outfd = pipe_fds[0];
+		write(1, token->str, token->strlen);
+		write(1, "c1\n", 3);
 		tokenizer_func(token);
 		exit(-1);
 	}
@@ -58,9 +59,12 @@ int	pipe_func(t_token *token)
 	if (0 == child2)
 	//if (1)
 	{
+		token->strlen = token->strlen - pipe_check(token) + 1;
 		token->str = &(token->str)[pipe_check(token) + 1];
-		token->strlen = token->strlen - pipe_check(token);
-		token->outfd = pipe_fds[0];
+		write(1, token->str, token->strlen);
+		write(1, "c2\n", 3);
+		token->infd = pipe_fds[0];
+		tokenizer_func(token);
 		exit(-1);
 	}
 	waitpid(child1, NULL, 0); // TODO if NULL not needed remove include unistd
