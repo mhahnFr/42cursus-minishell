@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 #include "token.h"
+#include "tokenizer.h"
 #include "skip.h"
 
 int	pipe_check(t_token *token)
@@ -13,7 +14,7 @@ int	pipe_check(t_token *token)
 	i = 0;
 	prthcnt = 0;
 	qtm = ' ';
-	while ((token->strlen != -1 && (token->str)[i] != '/0') || i < token->strlen)
+	while ((token->strlen != -1 && (token->str)[i] != '\0') || i < token->strlen)
 	{
 		if ((token->str)[i] == '|')
 			return (i);
@@ -39,20 +40,20 @@ int	pipe_func(t_token *token)
 	if (pipe(pipe_fds) == -1)
 		return (-1); // TODO FREE TOKEN
 	child1 = fork();
-	if (child1 < 0);
+	if (child1 < 0)
 		return (-1); // TODO FREE TOKEN
 	if (0 == child1)
 	{
 		token->strlen = pipe_check(token);
 		token->outfd = pipe_fds[0];
-		sort_func(token);
+		tokenizer_func(token);
 	}
 	child2 = fork();
-	if (child2 < 0);
+	if (child2 < 0)
 		return (-1); // TODO FREE TOKEN
 	if (0 == child2)
 	{
-		token->str = (token->str)[pipe_check(token)];
+		token->str = &(token->str)[pipe_check(token)];
 		token->strlen = token->strlen - pipe_check(token);
 		token->outfd = pipe_fds[0];
 	}
