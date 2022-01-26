@@ -76,8 +76,8 @@ static void	print_header(void)
 
 int	main(void)
 {
-	struct s_token	*tokens;
-	char			*line;
+	t_token	token;
+	char	*line;
 
 	print_header();
 	while (true)
@@ -92,10 +92,8 @@ int	main(void)
 			if (syntax_check(line) == 0)
 			{
 				//parse(line, cmd, envp);
-				tokens = tokenize(line);
-				if (tokens != NULL)
-					//execute(tokens);
-				token_list_delete(tokens);
+				token.str = line;
+				tokenizer_func(&token);
 			}
 		}
 		free(line);

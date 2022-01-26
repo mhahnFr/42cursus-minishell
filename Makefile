@@ -2,12 +2,13 @@
 NAME = minishell
 
 # The source files.
-SRC = ./main.c command.c ./signals.c ./signals_execution.c ./token_linked.c   \
-	  ./signals_default.c ./syntax.c ./utils.c ./tokenizer.c ./token.c
+SRC = main.c command.c signals.c signals_execution.c token_linked.c   \
+	  signals_default.c syntax.c utils.c tokenizer.c token.c check.c \
+	  pipe.c skip.c
 
 # The header files.
-HDR = ./command.h ./parser.h ./signals.h ./syntax.h ./utils.h ./token.h       \
-	  ./token_type.h ./tokenizer.h
+HDR = command.h parser.h signals.h syntax.h utils.h token.h       \
+	  token_type.h tokenizer.h check.h pipe.h skip.h
 
 # The path to the libft.
 LFT_P = ./libft
