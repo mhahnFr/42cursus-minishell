@@ -4,9 +4,11 @@
 # include "token.h"
 
 /*
- * Tokenizes the given string. Returns a linked list containing the recognized
- * tokens. Returns either the allocated list or null in case of any error.
+ * Splits the token string into parts and does a reverse call until
+ * no more splitting is needed it then runs the comands
+ * returns 1 for split or succesfulls run 
+ * returns 0 for failed comand run
  */
-struct s_token	*tokenize(char *string);
+int	tokenizer_func(t_token *token);
 
 #endif

@@ -1,54 +1,47 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
-# include "token_type.h"
-
 /*
  * Represents a token. Consists of a pointer to the next and the previous
  * token, the type and the optional content.
  */
-struct s_token {
-	char			p;
-	char			n;
-	struct s_list	*cmd;
-	struct s_list	*in;
-	struct s_list	*out;
-	int				result;
-	int				exit_status;
-	struct s_token	*previous;
-	struct s_token	*next;
-};
+typedef struct s_token {
+	char			*str;
+	int				strlen;
+	int				infd;
+	int				outfd;
+}				t_token;
 
-/*
- * Allocates a new token. Returns either the newly allocated token or null if
- * the allocation failed.
- */
-struct s_token	*token_new(enum e_type type);
+// /*
+//  * Allocates a new token. Returns either the newly allocated token or null if
+//  * the allocation failed.
+//  */
+// struct s_token	*token_new(enum e_type type);
 
-/*
- * Initializes the given token. Does nothing if no token is given.
- */
-void			token_create(struct s_token *self, enum e_type type);
+// /*
+//  * Initializes the given token. Does nothing if no token is given.
+//  */
+// void			token_create(struct s_token *self, enum e_type type);
 
-/*
- * Appends the given token to the given list. If no list is given, the token to
- * be appended will be the first element.
- */
-void			token_append(struct s_token **self, struct s_token *appendix);
+// /*
+//  * Appends the given token to the given list. If no list is given, the token to
+//  * be appended will be the first element.
+//  */
+// void			token_append(struct s_token **self, struct s_token *appendix);
 
-/*
- * Deletes all tokens in the given list of tokens.
- */
-void			token_list_delete(struct s_token *self);
+// /*
+//  * Deletes all tokens in the given list of tokens.
+//  */
+// void			token_list_delete(struct s_token *self);
 
-/*
- * Deinitializes the given token. Does nothing if no token is given.
- */
-void			token_destroy(struct s_token *self);
+// /*
+//  * Deinitializes the given token. Does nothing if no token is given.
+//  */
+// void			token_destroy(struct s_token *self);
 
-/*
- * Destroys and frees the given token. Does nothing if no token is given.
- */
-void			token_delete(struct s_token *self);
+// /*
+//  * Destroys and frees the given token. Does nothing if no token is given.
+//  */
+// void			token_delete(struct s_token *self);
 
 #endif
