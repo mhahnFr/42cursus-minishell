@@ -24,8 +24,8 @@ typedef struct s_token {
 // void			token_create(struct s_token *self, enum e_type type);
 
 // /*
-//  * Appends the given token to the given list. If no list is given, the token to
-//  * be appended will be the first element.
+//  * Appends the given token to the given list. If no list is given, the token
+//  * to be appended will be the first element.
 //  */
 // void			token_append(struct s_token **self, struct s_token *appendix);
 

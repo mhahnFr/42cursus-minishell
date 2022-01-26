@@ -1,5 +1,5 @@
-#ifndef PIPE_H
-# define PIPE_H
+#ifndef CHECK_H
+# define CHECK_H
 
 # include "token.h"
 

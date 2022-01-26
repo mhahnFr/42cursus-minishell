@@ -2,8 +2,6 @@
 # define TOKENIZER_H
 
 # include "token.h"
-# include "check.h"
-# include "pipe.h"
 
 /*
  * Splits the token string into parts and does a reverse call until

@@ -2,10 +2,8 @@
 
 #include "tokenizer.h"
 #include "pipe.h"
-
-int	pipe_check(t_token *token);
-
-int	pipe_func(t_token *token);
+#include "check.h"
+#include "pipe.h"
 
 t_token	*tokenizer_apply_or_and(t_token *token)
 {
