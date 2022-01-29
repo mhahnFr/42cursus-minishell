@@ -6,11 +6,38 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 03:13:32 by mnies             #+#    #+#             */
-/*   Updated: 2022/01/29 09:32:34 by mnies            ###   ########.fr       */
+/*   Updated: 2022/01/29 11:18:54 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+
+int	str_special_cases(char next_char, char **ret, char *sign)
+{
+	int	i;
+	int	num = 100;
+	char	*test = "100";
+
+	i = 0;
+	if (next_char == '?' && ret == NULL)
+	{
+		while (num != 0)
+		{
+			num = num % 10;
+			i++;
+		}	
+	}
+	else if (next_char == '?' && ret != NULL)
+	{
+		*ret = test;
+		return (1);	// if (next_char == '?') TODO handle
+	}
+	else if (next_char != '?' && ret == NULL)
+		return (1);
+	else if (ret != NULL)
+		*ret = sign;
+	return (i);
+}
 
 size_t	str_get_var(char *str, char **ret)
 {
@@ -22,7 +49,7 @@ size_t	str_get_var(char *str, char **ret)
 		|| (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9'))
 		i++;
 	if (i == 0)
-		return (0);
+		return (str_special_cases(str[i], ret, "$"));
 	temp = malloc(sizeof(char) * (i + 1));
 	if (temp == NULL)
 		return (-1); //TODO error handling
@@ -43,17 +70,19 @@ size_t	str_get_var(char *str, char **ret)
 
 void	str_move(char *ret, char *str, char **tmp, char mode)
 {
-	while ((*str != ' ' || *str == '"' || *str == '\'') && *str != '\0')
+	while ((*str != ' ' || mode == '"' || mode == '\'') && *str != '\0')
 	{
-		if (mode != '\'' || mode != '"')
+		if (mode != '\'' && mode != '"')
 			mode = *str;
 		else if (mode == *str)
 			mode = *(str + 1);
-		if (*str != '"' && *str != '\'' && !(*str == '$' && mode != '\''))
+		if ((*str != '"' && *str != '\'' && *str != '$')
+			|| (*str == '$' && mode == '\''))
+		{
 			*ret = *str;
-		if (*str != '"' && *str != '\'' && !(*str == '$' && mode != '\''))
 			ret++;
-		else if (*str == '$')
+		}
+		else if (*str == '$' && mode != '\'')
 		{
 			str = str + str_get_var(str + 1, tmp);
 			while (tmp != NULL && *tmp != NULL && **tmp != '\0')
@@ -76,13 +105,14 @@ int	str_get_malloc_len(char *str)
 	len = 0;
 	while ((*str != ' ' || c == '"' || c == '\'') && *str != '\0')
 	{
-		if (c != '\'' || c != '"')
+		if (c != '\'' && c != '"')
 			c = *str;
 		else if (c == *str)
 			c = *(str + 1);
-		if (*str != '"' && *str != '\'' && !(*str == '$' && c != '\''))
+		if ((*str != '"' && *str != '\'' && *str != '$')
+			|| (*str == '$' && c == '\''))
 			len++;
-		else if (*str == '$')
+		else if (*str == '$' && c != '\'')
 		{
 			len = len + str_get_var(str + 1, NULL);
 			while ((str[1] >= 'a' && str[1] <= 'z') || str[1] == '_'

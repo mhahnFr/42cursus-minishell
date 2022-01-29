@@ -12,6 +12,7 @@
 void	parse_func(t_token *token)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while(i != token->strlen)
@@ -20,7 +21,13 @@ void	parse_func(t_token *token)
 		{
 			while ((token->str)[i + 2] == ' ')
 				i++;
-			write(1, str_copy(&(token->str)[i + 2]), ft_strlen(str_copy(&(token->str)[i + 2])));
+			if (str_copy(&(token->str)[i + 2]) != NULL)
+			{
+				j = ft_strlen(str_copy(&(token->str)[i + 2]));
+				write(1, str_copy(&(token->str)[i + 2]), j);
+			}
+			else
+				write(1, "(null)", 6);
 		}
 		i++;
 
