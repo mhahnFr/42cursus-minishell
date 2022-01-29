@@ -17,6 +17,6 @@ int	pipe_check(t_token *token);
  * and run sort_func on them
  * returns 1 for succesfull execution of second pipe part and 0 for failure
  */
-int	pipe_func(t_token *token);
+int	pipe_func(t_token *token, char **envp);
 
 #endif

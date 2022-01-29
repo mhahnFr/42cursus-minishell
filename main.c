@@ -74,11 +74,13 @@ static void	print_header(void)
 	print_header_part2();
 }
 
-int	main(void)
+int	main(int argcnt, char **args, char **envp)
 {
 	t_token	token;
 	char	*line;
 
+	(void)argcnt;
+	(void)args;
 	print_header();
 	while (true)
 	{
@@ -94,7 +96,7 @@ int	main(void)
 			{
 				token.strlen = ft_strlen(line);
 				token.str = line;
-				tokenizer_func(&token);
+				tokenizer_func(&token, envp);
 			}
 		}
 		free(line);

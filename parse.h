@@ -6,6 +6,6 @@
 /*
  *
  */
-void	parse_func(t_token *token);
+void	parse_func(t_token *token, char **envp);
 
 #endif

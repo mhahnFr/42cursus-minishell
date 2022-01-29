@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 03:13:32 by mnies             #+#    #+#             */
-/*   Updated: 2022/01/29 11:18:54 by mnies            ###   ########.fr       */
+/*   Updated: 2022/01/29 13:14:47 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	str_get_malloc_len(char *str)
 	return (len);
 }
 
-char	*str_copy(char *str)
+char	*str_copy(char *str, int suffixlen)
 {
 	char	*ret;
 	char	*tmp;
@@ -136,13 +136,13 @@ char	*str_copy(char *str)
 	tmp = NULL;
 	while (*str == ' ')
 		str++;
-	i = str_get_malloc_len(str);
+	i = str_get_malloc_len(str) + suffixlen;
 	if (i == 0)
 		return (NULL);
 	ret = malloc(sizeof(char) * (i + 1));
 	if (ret == NULL)
 		return (NULL); //TODO error handling
 	ret[i] = '\0';
-	str_move(ret, str, &tmp, ' ');
+	str_move(&ret[suffixlen], str, &tmp, ' ');
 	return (ret);
 }

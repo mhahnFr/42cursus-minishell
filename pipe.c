@@ -32,7 +32,7 @@ int	pipe_check(t_token *token)
 	return (0);
 }
 
-int	pipe_func(t_token *token)
+int	pipe_func(t_token *token, char **envp)
 {
 	int		pipe_fds[2];
 	pid_t	child1;
@@ -50,7 +50,7 @@ int	pipe_func(t_token *token)
 		token->outfd = pipe_fds[0];
 		write(1, token->str, token->strlen);
 		write(1, "c1\n", 3);
-		tokenizer_func(token);
+		tokenizer_func(token, envp);
 		exit(-1);
 	}
 	child2 = fork();
@@ -64,7 +64,7 @@ int	pipe_func(t_token *token)
 		write(1, token->str, token->strlen);
 		write(1, "c2\n", 3);
 		token->infd = pipe_fds[0];
-		tokenizer_func(token);
+		tokenizer_func(token, envp);
 		exit(-1);
 	}
 	waitpid(child1, NULL, 0); // TODO if NULL not needed remove include unistd

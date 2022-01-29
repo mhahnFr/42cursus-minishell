@@ -9,6 +9,6 @@
  * returns 1 for split or succesfulls run 
  * returns 0 for failed comand run
  */
-int	tokenizer_func(t_token *token);
+int	tokenizer_func(t_token *token, char **envp);
 
 #endif

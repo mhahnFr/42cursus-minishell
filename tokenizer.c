@@ -26,17 +26,17 @@ t_token	*tokenizer_apply_result(t_token *token, int res)
 	return (NULL);
 }
 
-int	tokenizer_func(t_token *token)
+int	tokenizer_func(t_token *token, char **envp)
 {
 	int	res;
 
 	// if (check_or_and(token))
 	// 	return (tokenizer_func(tokenizer_apply_or_and(token)));
 	if (pipe_check(token))
-		return (pipe_func(token));
+		return (pipe_func(token, envp));
 	// if (check_parenthesis(token))
 	// 	return (tokenizer_apply_parenthesis(token));
-	parse_func(token);
+	parse_func(token, envp);
 	res = 0;
 	return (1);
 	//return (tokenizer_func(tokenizer_apply_result(token, res)));
