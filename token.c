@@ -2,38 +2,31 @@
 
 #include "token.h"
 
-// struct s_token	*token_new(enum e_type type)
-// {
-// 	struct s_token	*self;
+void	token_next_arg(t_token *token)
+{
+	int		i;
+	int		j;
 
-// 	self = malloc(sizeof(struct s_token));
-// 	if (self != NULL)
-// 		token_create(self, type);
-// 	return (self);
-// }
+	i = 0;
+	while (token->str[i] == ' ')
+		i++;
+	while (token->str[i] != ' ' && token->str[i] != '\0')
+	{
+		if (token->str[i] == '"' || token->str[i] == '\'')
+		{
+			j = i;
+			i++;
+			while (token->str[i] != token->str[j])
+				i++;
+		}
+		i++;
+	}
+	token->str = &token->str[i];
+	token->strlen =  token->strlen - i;
+}
 
-// void	token_create(struct s_token *self, enum e_type type)
-// {
-// 	if (self == NULL)
-// 		return ;
-// 	self->type = type;
-// 	self->previous = NULL;
-// 	self->next = NULL;
-// }
-
-// void	token_destroy(struct s_token *self)
-// {
-// 	if (self == NULL)
-// 		return ;
-// 	self->type = UNDEFINED;
-// 	self->previous = NULL;
-// 	self->next = NULL;
-// }
-
-// void	token_delete(struct s_token *self)
-// {
-// 	if (self == NULL)
-// 		return ;
-// 	token_destroy(self);
-// 	free(self);
-// }
+void	move_one_char(t_token *token)
+{
+	token->str = &token->str[1];
+	token->strlen =  token->strlen - 1;
+}

@@ -29,8 +29,7 @@ void	parse_c_arg(t_token *token)
 	if (tmp != NULL)
 		free(tmp);
 	token->c_args[i] = str_copy(token->str, 0);
-	token->strlen = token->strlen + 1 - ft_strlen(token->c_args[i]);
-	token->str = &token->str[ft_strlen(token->c_args[i])];
+	token_next_arg(token);
 	token->c_args[i + 1] = NULL;
 }
 
@@ -49,8 +48,7 @@ void	parse_func(t_token *token)
 		else if (token->str[0] != ' ')
 			parse_c_arg(token);
 		else
-			token->str = &token->str[1];
-		token->strlen = token->strlen - 1;
+			move_one_char(token);
 	}
 	if (token->c_args != NULL)
 		exec_run(token, getenv("PATH"));

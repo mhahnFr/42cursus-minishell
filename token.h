@@ -12,36 +12,14 @@ typedef struct s_token {
 	char			**envp;
 }				t_token;
 
-// /*
-//  * Allocates a new token. Returns either the newly allocated token or null if
-//  * the allocation failed.
-//  */
-// struct s_token	*token_new(enum e_type type);
+/*
+ * Moves pointer token.str to the next argument
+ */
+void	token_next_arg(t_token *token);
 
-// /*
-//  * Initializes the given token. Does nothing if no token is given.
-//  */
-// void			token_create(struct s_token *self, enum e_type type);
-
-// /*
-//  * Appends the given token to the given list. If no list is given, the token
-//  * to be appended will be the first element.
-//  */
-// void			token_append(struct s_token **self, struct s_token *appendix);
-
-// /*
-//  * Deletes all tokens in the given list of tokens.
-//  */
-// void			token_list_delete(struct s_token *self);
-
-// /*
-//  * Deinitializes the given token. Does nothing if no token is given.
-//  */
-// void			token_destroy(struct s_token *self);
-
-// /*
-//  * Destroys and frees the given token. Does nothing if no token is given.
-//  */
-// void			token_delete(struct s_token *self);
+/*
+ * Moves pointer for one char
+ */
+void	move_one_char(t_token *token);
 
 #endif

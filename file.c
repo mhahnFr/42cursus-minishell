@@ -19,12 +19,7 @@ void	file_open(t_token *token)
 		exit(-1); // TODO erro managment
 	}
 	dup2(i, 0);
-	i = 1;
-	while(token->str[i] == ' ')
-		i++;
-	i = i + ft_strlen(filestr);
-	token->str = &token->str[i];
-	token->strlen = token->strlen - i;
+	token_next_arg(token);
 }
 
 void	file_write(t_token *token)
@@ -40,12 +35,7 @@ void	file_write(t_token *token)
 		exit(-1); // TODO erro managment
 	}
 	dup2(i, 1);
-	i = 1;
-	while(token->str[i] == ' ')
-		i++;
-	i = i + ft_strlen(filestr);
-	token->str = &token->str[i];
-	token->strlen = token->strlen - i;
+	token_next_arg(token);
 }
 
 void	file_append(t_token *token)
@@ -61,12 +51,7 @@ void	file_append(t_token *token)
 		exit(-1); // TODO erro managment
 	}
 	dup2(i, 1);
-	i = 2;
-	while(token->str[i] == ' ')
-		i++;
-	i = i + ft_strlen(filestr);
-	token->str = &token->str[i];
-	token->strlen = token->strlen - i;
+	token_next_arg(token);
 }
 
 // void	file_here_document(t_token token)

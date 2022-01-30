@@ -4,7 +4,17 @@
 
 #include "token.h"
 #include "tokenizer.h"
-#include "skip.h"
+
+int	pipe_skip_qtm_and_move(char *str)
+{
+	int		i;
+
+	i = 1;
+	if (str[0] == '"' || str[0] == '\'')
+		while (str[i] != str[0])
+			i++;
+	return (i);
+}
 
 int	pipe_check(t_token *token)
 {
@@ -25,9 +35,9 @@ int	pipe_check(t_token *token)
 				prthcnt++;
 			else if ((token->str)[i] == ')')
 				prthcnt--;
-			i = i + skip_qtm_and_move(&(token->str)[i]);
+			i = i + pipe_skip_qtm_and_move(&(token->str)[i]);
 		}
-		i = i + skip_qtm_and_move(&(token->str)[i]);
+		i = i + pipe_skip_qtm_and_move(&(token->str)[i]);
 	}
 	return (0);
 }

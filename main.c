@@ -8,7 +8,6 @@
 #include "libft/libft.h"
 
 #include "minishell.h"
-#include "command.h"
 #include "signals.h"
 #include "syntax.h"
 #include "tokenizer.h"
