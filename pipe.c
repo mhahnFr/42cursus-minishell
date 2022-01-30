@@ -32,12 +32,15 @@ int	pipe_check(t_token *token)
 	return (0);
 }
 
-int	pipe_func(t_token *token, char **envp)
+int	pipe_func(t_token *token)
 {
 	int		pipe_fds[2];
+	int		len;
 	pid_t	child1;
 	pid_t	child2;
+	int		status;
 
+	len = pipe_check(token);
 	if (pipe(pipe_fds) == -1)
 		return (-1); // TODO FREE TOKEN
 	child1 = fork();
@@ -46,12 +49,11 @@ int	pipe_func(t_token *token, char **envp)
 	if (0 == child1)
 	//if (1)
 	{
-		token->strlen = pipe_check(token);
-		token->outfd = pipe_fds[0];
-		write(1, token->str, token->strlen);
-		write(1, "c1\n", 3);
-		tokenizer_func(token, envp);
-		exit(-1);
+		token->strlen = len - 1;
+		dup2(pipe_fds[1], 1);
+		close(pipe_fds[0]);
+		close(pipe_fds[1]);
+		exit(tokenizer_func(token));
 	}
 	child2 = fork();
 	if (child2 < 0)
@@ -59,14 +61,16 @@ int	pipe_func(t_token *token, char **envp)
 	if (0 == child2)
 	//if (1)
 	{
-		token->strlen = token->strlen - pipe_check(token) + 1;
-		token->str = &(token->str)[pipe_check(token) + 1];
-		write(1, token->str, token->strlen);
-		write(1, "c2\n", 3);
-		token->infd = pipe_fds[0];
-		tokenizer_func(token, envp);
-		exit(-1);
+		token->strlen = token->strlen - len - 1;
+		token->str = &token->str[len + 1];
+		dup2(pipe_fds[0], 0);
+		close(pipe_fds[0]);
+		close(pipe_fds[1]);
+		exit(tokenizer_func(token));
 	}
+	close(pipe_fds[0]);
+	close(pipe_fds[1]);
 	waitpid(child1, NULL, 0); // TODO if NULL not needed remove include unistd
-	return (waitpid(child2, NULL, 0));
+	waitpid(child2, &status, 0);
+	return (status);
 }

@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdlib.h>
 
 #include "utils.h"
 
@@ -28,4 +29,19 @@ bool	utils_only_whitespace(const char *string)
 		i++;
 	}
 	return (true);
+}
+
+void	utils_free_double_pointer(char ***double_pointer)
+{
+	int	i;
+
+	i = 0;
+	while(*double_pointer != NULL && (*double_pointer)[i] != NULL)
+	{
+		free((*double_pointer)[i]);
+		i++;
+	}
+	if(*double_pointer != NULL)
+		free(*double_pointer);
+	*double_pointer = NULL;
 }

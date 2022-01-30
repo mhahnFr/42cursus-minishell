@@ -79,6 +79,8 @@ int	main(int argcnt, char **args, char **envp)
 	t_token	token;
 	char	*line;
 
+	token.c_args = NULL;
+	token.envp = envp;
 	(void)argcnt;
 	(void)args;
 	print_header();
@@ -96,7 +98,7 @@ int	main(int argcnt, char **args, char **envp)
 			{
 				token.strlen = ft_strlen(line);
 				token.str = line;
-				tokenizer_func(&token, envp);
+				tokenizer_func(&token);
 			}
 		}
 		free(line);
