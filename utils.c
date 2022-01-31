@@ -36,12 +36,12 @@ void	utils_free_double_pointer(char ***double_pointer)
 	int	i;
 
 	i = 0;
-	while(*double_pointer != NULL && (*double_pointer)[i] != NULL)
+	while (*double_pointer != NULL && (*double_pointer)[i] != NULL)
 	{
 		free((*double_pointer)[i]);
 		i++;
 	}
-	if(*double_pointer != NULL)
+	if (*double_pointer != NULL)
 		free(*double_pointer);
 	*double_pointer = NULL;
 }
