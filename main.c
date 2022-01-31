@@ -101,5 +101,6 @@ int	main(void)
 		}
 		free(line);
 	}
+	signals_reset_echoctl();
 	return (0);
 }

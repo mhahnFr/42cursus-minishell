@@ -21,4 +21,9 @@ void	signals_execution(void);
  */
 void	signals_reset(void);
 
+/*
+ * Resets the settings for dislaying the signal characters.
+ */
+void	signals_reset_echoctl(void);
+
 #endif
