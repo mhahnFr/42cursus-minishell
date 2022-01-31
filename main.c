@@ -95,6 +95,7 @@ int	main(void)
 			{
 				token.strlen = ft_strlen(line);
 				token.str = line;
+				signals_execution();
 				tokenizer_func(&token);
 			}
 		}
