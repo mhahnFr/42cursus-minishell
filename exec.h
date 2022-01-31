@@ -10,6 +10,6 @@
  * env is str with all locations where to look for the command separted by ":"
  * returns status of execution
  */
-bool	exec_run(t_token *token, char* env);
+bool	exec_run(t_token *token, char *env);
 
 #endif

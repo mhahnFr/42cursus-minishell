@@ -15,7 +15,7 @@ bool	utils_is_whitespace(const char c);
 bool	utils_only_whitespace(const char *string);
 
 /*
- * Frees a double pointer to char. Everzthing ther has to be allocated with
+ * Frees a double pointer to char. Everything ther has to be allocated with
  * malloc to avoid freeing unallocated memmory.
  */
 void	utils_free_double_pointer(char ***double_pointer);

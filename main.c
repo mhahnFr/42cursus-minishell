@@ -95,10 +95,12 @@ int	main(void)
 			{
 				token.strlen = ft_strlen(line);
 				token.str = line;
+				signals_execution();
 				tokenizer_func(&token);
 			}
 		}
 		free(line);
 	}
+	signals_reset_echoctl();
 	return (0);
 }
