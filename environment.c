@@ -14,8 +14,8 @@ static size_t	get_env_size(char **env)
 
 char	**copy_env(void)
 {
-	size_t		index;
 	char		**ret;
+	size_t		index;
 	extern char	**environ;
 
 	ret = malloc(get_env_size(environ) * sizeof(char *));
