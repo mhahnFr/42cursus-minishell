@@ -33,7 +33,7 @@ void	parse_c_arg(t_token *token)
 	token->c_args[i + 1] = NULL;
 }
 
-void	parse_func(t_token *token)
+int	parse_func(t_token *token)
 {
 	while(token->strlen > 0)
 	{
@@ -51,5 +51,6 @@ void	parse_func(t_token *token)
 			move_one_char(token);
 	}
 	if (token->c_args != NULL)
-		exec_run(token, getenv("PATH"));
+		return (exec_run(token, getenv("PATH")));
+	return (1);
 }
