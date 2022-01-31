@@ -20,4 +20,10 @@ bool	utils_only_whitespace(const char *string);
  */
 void	utils_free_double_pointer(char ***double_pointer);
 
+/*
+ * Allocates a new char array and copys the contents of the environment.
+ * Returns either the newly allocated array or null if the allocation failed.
+ */
+char	**copy_env(void);
+
 #endif

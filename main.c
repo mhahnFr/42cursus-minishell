@@ -73,16 +73,14 @@ static void	print_header(void)
 	print_header_part2();
 }
 
-int	main(int argcnt, char **args, char **envp)
+int	main(void)
 {
 	t_token	token;
 	char	*line;
 
 	token.c_args = NULL;
-	token.envp = envp;
-	(void)argcnt;
-	(void)args;
 	print_header();
+	token.envp = copy_env();
 	while (true)
 	{
 		signals_default();

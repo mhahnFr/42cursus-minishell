@@ -4,7 +4,7 @@ NAME = minishell
 # The source files.
 SRC = main.c signals.c signals_execution.c str.c parse.c \
 	  signals_default.c syntax.c utils.c tokenizer.c token.c check.c \
-	  pipe.c exec.c file.c
+	  pipe.c exec.c file.c environment.c
 
 # The header files.
 HDR = signals.h syntax.h utils.h token.h exec.h file.h \
