@@ -42,6 +42,7 @@ int	tokenizer_apply_parenthesis(t_token *token)
 	{
 		while (token->str[token->strlen] != ')')
 			token->strlen--;
+		token->strlen--;
 		exit(tokenizer_func(token));
 	}
 	token->str = &token->str[token->strlen];

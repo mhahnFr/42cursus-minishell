@@ -6,7 +6,7 @@
 #include "utils.h"
 #include "exec.h"
 #include "file.h"
-
+#include "builtin.h"
 
 void	parse_c_arg(t_token *token)
 {
@@ -50,6 +50,8 @@ int	parse_func(t_token *token)
 		else
 			move_one_char(token);
 	}
+	if (token->c_args != NULL && builtin_check(token))
+		return (builtin_exec(token));
 	if (token->c_args != NULL)
 		return (exec_run(token, getenv("PATH")));
 	return (1);

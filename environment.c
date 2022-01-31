@@ -27,5 +27,6 @@ char	**copy_env(void)
 		ret[index] = ft_strdup(environ[index]);
 		index++;
 	}
+	ret[index] = NULL;
 	return (ret);
 }
