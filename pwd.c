@@ -12,11 +12,11 @@ int	builtin_pwd(char **argv)
 
 	if (*argv != NULL)
 	{
-		ft_putendl("Too many arguments!", 2);
+		ft_putendl_fd("Too many arguments!", 2);
 		return (1);
 	}
 	pwd = NULL;
-	pwd = getcwd(pwd);
+	pwd = getcwd(pwd, 1);
 	printf("%s\n", pwd);
 	free(pwd);
 	return (0);
