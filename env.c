@@ -4,10 +4,9 @@
 
 #include "env.h"
 
-int	builtin_env(char **argv)
+int	builtin_env(char **argv, char **env)
 {
 	size_t		index;
-	extern char	**environ;
 
 	if (*argv != NULL)
 	{
@@ -15,9 +14,9 @@ int	builtin_env(char **argv)
 		return (1);
 	}
 	index = 0;
-	while (environ[index] != NULL)
+	while (env[index] != NULL)
 	{
-		printf("%s\n", environ[index]);
+		printf("%s\n", env[index]);
 		index++;
 	}
 	return (0);
