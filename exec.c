@@ -8,7 +8,7 @@
 #include "utils.h"
 #include "libft.h"
 
-bool	exec_run(t_token *token, char* env)
+bool	exec_run(t_token *token, char *env)
 {
 	char	*cmd_w_path;
 	int		i;
@@ -36,7 +36,7 @@ bool	exec_run(t_token *token, char* env)
 	if (0 != access(cmd_w_path, X_OK))
 	{
 		free(cmd_w_path);
-		return(exec_run(token, &env[i + 1]));
+		return (exec_run(token, &env[i + 1]));
 	}
 	child = fork();
 	if (0 == child)

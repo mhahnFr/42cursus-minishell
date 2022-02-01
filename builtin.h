@@ -5,6 +5,6 @@
 
 int	builtin_check(t_token *token);
 
-int builtin_exec(t_token *token);
+int	builtin_exec(t_token *token);
 
 #endif

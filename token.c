@@ -22,11 +22,11 @@ void	token_next_arg(t_token *token)
 		i++;
 	}
 	token->str = &token->str[i];
-	token->strlen =  token->strlen - i;
+	token->strlen = token->strlen - i;
 }
 
 void	move_one_char(t_token *token)
 {
 	token->str = &token->str[1];
-	token->strlen =  token->strlen - 1;
+	token->strlen = token->strlen - 1;
 }

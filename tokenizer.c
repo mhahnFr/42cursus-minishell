@@ -18,6 +18,7 @@ t_token	*tokenizer_apply_or_and(t_token *token)
 int	tokenizer_check_parenthesis(t_token *token)
 {
 	int		i;
+
 	i = 0;
 	while (token->str[i] == ' ')
 		i++;
@@ -50,7 +51,6 @@ int	tokenizer_apply_parenthesis(t_token *token)
 	waitpid(child, &status, 0);
 	return (status);
 }
-
 
 int	tokenizer_func(t_token *token)
 {

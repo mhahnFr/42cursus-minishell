@@ -2,8 +2,8 @@
 
 int	str_special_cases(char next_char, char **ret, char *sign)
 {
-	int	i;
-	int	num = 100;
+	int		i;
+	int		num = 100;
 	char	*test = "100";
 
 	i = 0;

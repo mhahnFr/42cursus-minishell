@@ -18,8 +18,8 @@ void	parse_c_arg(t_token *token)
 		i++;
 	tmp = token->c_args;
 	token->c_args = malloc(sizeof(char *) * (i + 2));
-		if (token->c_args == NULL)
-			exit (-1);
+	if (token->c_args == NULL)
+		exit (-1);
 	i = 0;
 	while (tmp != NULL && tmp[i] != NULL)
 	{
@@ -35,7 +35,7 @@ void	parse_c_arg(t_token *token)
 
 int	parse_func(t_token *token)
 {
-	while(token->strlen > 0)
+	while (token->strlen > 0)
 	{
 		if ((token->str)[0] == '>' && (token->str)[1] == '>')
 			file_append(token);

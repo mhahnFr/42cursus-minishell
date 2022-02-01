@@ -8,9 +8,9 @@
 
 void	file_open(t_token *token)
 {
-	int	i;
+	int		i;
+	char	*filestr;
 
-	char *filestr;
 	filestr = str_copy(&token->str[1], 0);
 	i = open(filestr, O_RDONLY);
 	if (i == -1)
@@ -24,9 +24,9 @@ void	file_open(t_token *token)
 
 void	file_write(t_token *token)
 {
-	int	i;
+	int		i;
+	char	*filestr;
 
-	char *filestr;
 	filestr = str_copy(&token->str[1], 0);
 	i = open(filestr, O_WRONLY | O_CREAT | O_TRUNC, 644);
 	if (i == -1)
@@ -40,9 +40,9 @@ void	file_write(t_token *token)
 
 void	file_append(t_token *token)
 {
-	int	i;
+	int		i;
+	char	*filestr;
 
-	char *filestr;
 	filestr = str_copy(&token->str[2], 0);
 	i = open(filestr, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (i == -1)
