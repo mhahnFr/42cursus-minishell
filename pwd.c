@@ -10,7 +10,7 @@ int	builtin_pwd(char **argv)
 {
 	char	*pwd;
 
-	if (*argv != NULL)
+	if (argv[1] != NULL)
 	{
 		ft_putendl_fd("Too many arguments!", 2);
 		return (1);
