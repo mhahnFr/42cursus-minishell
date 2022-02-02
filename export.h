@@ -1,6 +1,6 @@
 #ifndef EXPORT_H
 # define EXPORT_H
 
-int	builtin_export(char **argv);
+int	builtin_export(char **argv, char **env);
 
 #endif
