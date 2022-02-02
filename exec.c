@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "minishell.h"
 #include "token.h"
 #include "str.h"
 #include "utils.h"
@@ -20,8 +21,9 @@ bool	exec_run(t_token *token, char *env)
 		i++;
 	if (i == 0)
 	{
-		write(2, token->c_args[0], ft_strlen(token->c_args[0]));
-		write(2, "Error: cmd not found\n", 21);
+		ft_putstr_fd(NAME ": command not found: ", 2);
+		ft_putendl_fd(token->c_args[0], 2);
+		utils_free_double_pointer(&token->c_args);
 		return (-1);
 	}
 	cmd_w_path = str_copy(token->c_args[0], i + 1);
