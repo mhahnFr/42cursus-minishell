@@ -21,6 +21,6 @@ void	token_next_arg(t_token *token);
 /*
  * Moves pointer for one char
  */
-void	move_one_char(t_token *token);
+void	token_move_one_char(t_token *token);
 
 #endif

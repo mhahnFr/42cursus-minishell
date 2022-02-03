@@ -4,12 +4,13 @@ NAME = minishell
 # The source files.
 SRC = main.c signals.c signals_execution.c str.c parse.c builtin.c unset.c \
 	  signals_default.c syntax.c utils.c tokenizer.c token.c pwd.c \
-	  pipe.c exec.c file.c environment.c cd.c echo.c env.c exit.c export.c
+	  pipe.c exec.c file.c environment.c cd.c echo.c env.c exit.c export.c \
+	  wildcard.c
 
 # The header files.
 HDR = signals.h syntax.h utils.h token.h exec.h file.h builtin.h pwd.h echo.h \
 	  tokenizer.h pipe.h str.h parse.h env.h exit.h cd.h \
-	  export.h unset.h
+	  export.h unset.h wildcard.h
 
 # The path to the libft.
 LFT_P = ./libft

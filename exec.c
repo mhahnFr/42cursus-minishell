@@ -27,8 +27,7 @@ bool	exec_run(t_token *token, char *env)
 		utils_free_double_pointer(&token->c_args);
 		return (-1);
 	}
-	cmd_w_path = str_copy(token->c_args[0], i + 1);
-	cmd_w_path[i] = '/';
+	cmd_w_path = str_copy(token, i);
 	while (i > 0)
 	{
 		i--;

@@ -28,8 +28,7 @@ void	parse_c_arg(t_token *token)
 	}
 	if (tmp != NULL)
 		free(tmp);
-	token->c_args[i] = str_copy(token->str, 0);
-	token_next_arg(token);
+	token->c_args[i] = str_copy(token, 0);
 	token->c_args[i + 1] = NULL;
 }
 
@@ -48,7 +47,7 @@ int	parse_func(t_token *token)
 		else if (token->str[0] != ' ')
 			parse_c_arg(token);
 		else
-			move_one_char(token);
+			token_move_one_char(token);
 	}
 	if (token->c_args != NULL && builtin_check(token))
 		return (builtin_exec(token));

@@ -1,136 +1,172 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/03 16:57:52 by mnies             #+#    #+#             */
+/*   Updated: 2022/02/03 22:10:40 by mnies            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 
-int	str_special_cases(char next_char, char **ret, char *sign)
+#include "token.h"
+#include "env.h"
+#include "wildcard.h"
+
+// void	str_move(char *ret, char *str, char **tmp, char mode)
+// {
+// 	while ((*str != ' ' || mode == '"' || mode == '\'') && *str != '\0')
+// 	{
+// 		if (mode != '\'' && mode != '"')
+// 			mode = *str;
+// 		else if (mode == *str)
+// 			mode = *(str + 1);
+// 		if ((*str != '"' && *str != '\'' && *str != '$')
+// 			|| (*str == '$' && mode == '\''))
+// 		{
+// 			*ret = *str;
+// 			ret++;
+// 		}
+// 		else if (*str == '$' && mode != '\'')
+// 		{
+// 			str = str + str_get_var(str + 1, tmp);
+// 			while (tmp != NULL && *tmp != NULL && **tmp != '\0')
+// 			{
+// 				*ret = **tmp;
+// 				ret++;
+// 				(*tmp)++;
+// 			}
+// 		}
+// 		str++;
+// 	}
+// }
+
+int	str_replace_len(char **env, char *s, char **dst, char c)
 {
 	int		i;
-	int		num = 100;
-	char	*test = "100";
+	char	*str;
+	int		j;
 
-	i = 0;
-	if (next_char == '?' && ret == NULL)
-	{
-		while (num != 0)
-		{
-			num = num % 10;
-			i++;
-		}	
-	}
-	else if (next_char == '?' && ret != NULL)
-	{
-		*ret = test;
-		return (1);	// if (next_char == '?') TODO handle
-	}
-	else if (next_char != '?' && ret == NULL)
+	if (s[0] == '*')
+		return (wildcard(s, dst, c));
+	if (s[0] == '$' && s[1] == '?')
+		return (wildcard(s, dst, c)); // TODO replace history func
+	i = 1;
+	while ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A'
+			&& s[i] <= 'Z') || (s[i] >= '0' && s[i] <= '9') || s[i] == '_')
+		i++;
+	if (i == 1)
+		**dst = '$';
+	if (i == 1)
 		return (1);
-	else if (ret != NULL)
-		*ret = sign;
+	str = get_envar(env, s, &i, c);
+	j = 0;
+	while (dst != NULL && j != i)
+	{
+		(*dst)[j] = str[j];
+		j++;
+	}
 	return (i);
 }
 
-size_t	str_get_var(char *str, char **ret)
+int	str_get_malloc_len(char **env, char *str, int strlen, char c)
 {
+	int		len;
 	int		i;
-	char	*temp;
 
 	i = 0;
-	while ((str[i] >= 'a' && str[i] <= 'z') || str[i] == '_'
-		|| (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9'))
-		i++;
-	if (i == 0)
-		return (str_special_cases(str[i], ret, "$"));
-	temp = malloc(sizeof(char) * (i + 1));
-	if (temp == NULL)
-		return (-1); //TODO error handling
-	temp[i] = '\0';
-	while (i > 0)
-	{
-		i--;
-		temp[i] = str[i];
-	}
-	str = getenv(temp);
-	while ((str[i] != '\0' && ret == NULL) || (temp[i] != '\0' && ret != NULL))
-		i++;
-	if (ret != NULL)
-		*ret = str;
-	free(temp);
-	return (i);
-}
-
-void	str_move(char *ret, char *str, char **tmp, char mode)
-{
-	while ((*str != ' ' || mode == '"' || mode == '\'') && *str != '\0')
-	{
-		if (mode != '\'' && mode != '"')
-			mode = *str;
-		else if (mode == *str)
-			mode = *(str + 1);
-		if ((*str != '"' && *str != '\'' && *str != '$')
-			|| (*str == '$' && mode == '\''))
-		{
-			*ret = *str;
-			ret++;
-		}
-		else if (*str == '$' && mode != '\'')
-		{
-			str = str + str_get_var(str + 1, tmp);
-			while (tmp != NULL && *tmp != NULL && **tmp != '\0')
-			{
-				*ret = **tmp;
-				ret++;
-				(*tmp)++;
-			}
-		}
-		str++;
-	}
-}
-
-int	str_get_malloc_len(char *str)
-{
-	char	c;
-	int		len;
-
-	c = ' ';
 	len = 0;
-	while ((*str != ' ' || c == '"' || c == '\'') && *str != '\0')
+	while ((str[i] != ' ' || c == '"' || c == '\'') && i < strlen)
 	{
 		if (c != '\'' && c != '"')
-			c = *str;
-		else if (c == *str)
-			c = *(str + 1);
-		if ((*str != '"' && *str != '\'' && *str != '$')
-			|| (*str == '$' && c == '\''))
+			c = str[i];
+		else if (c == str[i])
+			c = str[i + 1];
+		if ((str[i] != '"' && str[i] != '\'' && str[i] != '$')
+			|| (str[i] == '$' && c == '\''))
 			len++;
-		else if (*str == '$' && c != '\'')
+		else if ((str[i] == '$' || str[i] == '*') && c != '\'')
 		{
-			len = len + str_get_var(str + 1, NULL);
-			while ((str[1] >= 'a' && str[1] <= 'z') || str[1] == '_'
-				|| (str[1] >= 'A' && str[1] <= 'Z')
-				|| (str[1] >= '0' && str[1] <= '9'))
-				str++;
+			len = len + str_replace_len(env, &str[i], NULL, c);
+			while ((str[i + 1] >= 'a' && str[i + 1] <= 'z') || str[i + 1] == '_'
+				|| (str[i + 1] >= 'A' && str[i + 1] <= 'Z')
+				|| (str[i + 1] >= '0' && str[i + 1] <= '9'))
+				i++;
 		}
-		str++;
+		i++;
 	}
 	return (len);
 }
 
-char	*str_copy(char *str, int suffixlen)
+void	str_copy_chars_token(t_token *token, char **dst, char c)
 {
-	char	*ret;
-	char	*tmp;
-	char	mode;
+	if ((token->str[0] != '"' && token->str[0] != '\''
+			&& token->str[0] != '$') || (token->str[0] == '$' && c == '\''))
+	{
+		**dst = token->str[0];
+		(*dst)++;
+	}
+	else if ((token->str[0] == '$' || token->str[0] == '*') && c != '\'')
+	{
+		*dst = *dst + str_replace_len(token->envp, token->str, dst, c);
+		while ((token->str[0] >= 'a' && token->str[0] <= 'z')
+			|| token->str[0] == '_'
+			|| (token->str[0] >= 'A' && token->str[0] <= 'Z')
+			|| (token->str[0] >= '0' && token->str[0] <= '9'))
+			token->str++;
+	}
+}
+
+void	str_copy_chars(t_token *token, char *dst, int strlen, int suffixlen)
+{
+	char	c;
+
+	c = ' ';
+	while (strlen != 1 && suffixlen != 0)
+	{
+		dst[strlen - 1] = token->c_args[0][strlen - 2];
+		strlen--;
+		dst[0] = '/';
+	}
+	while (suffixlen == 0 && (token->str[0] != ' ' || c == '"' || c == '\'')
+		&& 0 < token->strlen)
+	{
+		if (c != '\'' && c != '"')
+			c = token->str[0];
+		else if (c == token->str[0])
+			c = token->str[1];
+		str_copy_chars_token(token, &dst, c);
+		token_move_one_char(token);
+	}
+}
+
+char	*str_copy(t_token *token, int suffixlen)
+{
+	char	*str;
 	int		i;
 
-	mode = ' ';
-	tmp = NULL;
-	while (*str == ' ')
-		str++;
-	i = str_get_malloc_len(str) + suffixlen;
-	if (i == 0)
-		return (NULL);
-	ret = malloc(sizeof(char) * (i + 1));
-	if (ret == NULL)
-		return (NULL); //TODO error handling
-	ret[i] = '\0';
-	str_move(&ret[suffixlen], str, &tmp, ' ');
-	return (ret);
+	if (suffixlen != 0)
+	{
+		i = 0;
+		while (token->c_args[0][i] != '\0')
+			i++;
+		i = i + 1 + suffixlen;
+	}
+	else
+	{
+		while (token->str[0] == ' ')
+			(token->str)++;
+		i = str_get_malloc_len(token->envp, token->str, token->strlen, ' ');
+		if (i == 0)
+			return (NULL);
+	}
+	str = malloc(sizeof(char) * (i + 1));
+	if (str == NULL)
+		exit(-1); //TODO error handling
+	str[i] = '\0';
+	str_copy_chars(token, &str[suffixlen], i - suffixlen, suffixlen);
+	return (str);
 }
