@@ -8,6 +8,7 @@
 typedef struct s_token {
 	char			*str;
 	int				strlen;
+	int				exitstat;
 	char			**c_args;
 	char			**envp;
 }				t_token;

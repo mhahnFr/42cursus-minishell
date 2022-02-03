@@ -60,6 +60,7 @@ int	pipe_func(t_token *token)
 	//if (1)
 	{
 		token->strlen = len - 1;
+		token->str[token->strlen] = '\0';
 		dup2(pipe_fds[1], 1);
 		close(pipe_fds[0]);
 		close(pipe_fds[1]);
@@ -73,6 +74,7 @@ int	pipe_func(t_token *token)
 	{
 		token->strlen = token->strlen - len - 1;
 		token->str = &token->str[len + 1];
+		token->str[token->strlen] = '\0';
 		dup2(pipe_fds[0], 0);
 		close(pipe_fds[0]);
 		close(pipe_fds[1]);
@@ -80,7 +82,12 @@ int	pipe_func(t_token *token)
 	}
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
-	waitpid(child1, NULL, 0); // TODO if NULL not needed remove include unistd
+	waitpid(child1, NULL, 0);
 	waitpid(child2, &status, 0);
-	return (status);
+	if (WIFEXITED(status))
+		token->exitstat = WEXITSTATUS(status);
+	else
+		token->exitstat = -1;
+	token->str = &token->str[token->strlen];
+	return (tokenizer_func(token));
 }

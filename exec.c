@@ -8,6 +8,7 @@
 #include "str.h"
 #include "utils.h"
 #include "libft.h"
+#include "tokenizer.h"
 
 bool	exec_run(t_token *token, char *env)
 {
@@ -47,5 +48,9 @@ bool	exec_run(t_token *token, char *env)
 		return (false);
 	utils_free_double_pointer(&token->c_args);
 	waitpid(child, &status, 0);
-	return (WIFEXITED(status));
+	if (WIFEXITED(status))
+		token->exitstat = WEXITSTATUS(status);
+	else
+		token->exitstat = -1;
+	return (tokenizer_func(token));
 }
