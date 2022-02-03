@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:57:52 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/03 22:10:40 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/03 22:42:52 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ void	str_copy_chars_token(t_token *token, char **dst, char c)
 	else if ((token->str[0] == '$' || token->str[0] == '*') && c != '\'')
 	{
 		*dst = *dst + str_replace_len(token->envp, token->str, dst, c);
-		while ((token->str[0] >= 'a' && token->str[0] <= 'z')
-			|| token->str[0] == '_'
-			|| (token->str[0] >= 'A' && token->str[0] <= 'Z')
-			|| (token->str[0] >= '0' && token->str[0] <= '9'))
-			token->str++;
+		while ((token->str[1] >= 'a' && token->str[1] <= 'z')
+			|| token->str[1] == '_'
+			|| (token->str[1] >= 'A' && token->str[1] <= 'Z')
+			|| (token->str[1] >= '0' && token->str[1] <= '9'))
+			token_move_one_char(token);
 	}
 }
 
@@ -160,8 +160,6 @@ char	*str_copy(t_token *token, int suffixlen)
 		while (token->str[0] == ' ')
 			(token->str)++;
 		i = str_get_malloc_len(token->envp, token->str, token->strlen, ' ');
-		if (i == 0)
-			return (NULL);
 	}
 	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)

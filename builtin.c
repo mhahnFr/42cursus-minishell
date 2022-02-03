@@ -18,8 +18,8 @@ int	builtin_check(t_token *token)
 		== 0
 		|| ft_strncmp(token->c_args[0], "cd", ft_strlen(token->c_args[0]))
 		== 0
-		|| ft_strncmp(token->c_args[0], "echo", ft_strlen(token->c_args[0]))
-		== 0
+		// || ft_strncmp(token->c_args[0], "echo", ft_strlen(token->c_args[0]))
+		// == 0
 		|| ft_strncmp(token->c_args[0], "export", ft_strlen(token->c_args[0]))
 		== 0
 		|| ft_strncmp(token->c_args[0], "unset", ft_strlen(token->c_args[0]))
