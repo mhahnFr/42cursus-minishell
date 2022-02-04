@@ -31,6 +31,27 @@ bool	utils_only_whitespace(const char *string)
 	return (true);
 }
 
+bool	string_equals(const char *self, const char *other)
+{
+	size_t	i;
+
+	if ((self == NULL && other != NULL)
+		|| (other == NULL && self != NULL))
+		return (false);
+	else if (self == NULL && other == NULL)
+		return (true);
+	i = 0;
+	while (self[i] != '\0' && other[i] != '\0')
+	{
+		if (self[i] != other[i])
+			return (false);
+		i++;
+	}
+	if (self[i] != other[i])
+		return (false);
+	return (true);
+}
+
 void	utils_free_double_pointer(char ***double_pointer)
 {
 	int	i;

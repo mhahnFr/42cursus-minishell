@@ -21,6 +21,12 @@ bool	utils_only_whitespace(const char *string);
 void	utils_free_double_pointer(char ***double_pointer);
 
 /*
+ * Compares the two given strings literally. If one of them is null, false is
+ * returned, if both are null, true is returned. Otherwise, they are compared.
+ */
+bool	string_equals(const char *self, const char *other);
+
+/*
  * Allocates a new char array and copys the contents of the environment.
  * Returns either the newly allocated array or null if the allocation failed.
  */
