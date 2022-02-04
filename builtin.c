@@ -16,6 +16,7 @@ int	builtin_check(t_token *token)
 
 	arg = token->c_args[0];
 	return (string_equals(arg, "env")
+		|| string_equals(arg, "export")
 		|| string_equals(arg, "pwd"));
 }
 
@@ -30,6 +31,8 @@ int	builtin_exec(t_token *t)
 		exit_status = builtin_env(t->c_args, t->envp);
 	else if (string_equals(arg, "pwd"))
 		exit_status = builtin_pwd(t->c_args);
+	else if (string_equals(arg, "export"))
+		exit_status = builtin_export(t->c_args, &t->envp);
 	utils_free_double_pointer(&t->c_args);
 	return (exit_status);
 }
