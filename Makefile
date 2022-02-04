@@ -18,6 +18,12 @@ LFT_P = ./libft
 # The full path to the libft.
 LFT_D = $(LFT_P)/libft.a
 
+# The path to the get_next_line library.
+GNL_P = ./get_next_line
+
+# The full path of the get_next_line library.
+GNL_D = $(GNL_P)/libgnl.a
+
 # the path to the object files.
 O_P = ./bin
 
@@ -28,10 +34,10 @@ OBJ = $(addprefix $(O_P)/,$(SRC:.c=.o))
 CFLAGS = -Wall -Werror -Wextra $(INC) -g #-Ofast
 
 # The includes for the project.
-INC = -I. -I$(HOME)/.brew/opt/readline/include -I$(LFT_P)
+INC = -I. -I$(HOME)/.brew/opt/readline/include -I$(LFT_P) -I$(GNL_P)
 
 # The flags to be used during linking.
-LDFLAGS = -L$(HOME)/.brew/opt/readline/lib -lreadline -L$(LFT_P) -lft
+LDFLAGS = -L$(HOME)/.brew/opt/readline/lib -lreadline -L$(LFT_P) -lft -L$(GNL_P) -lgnl
 
 
 # Makes whatever is necessary.
@@ -49,11 +55,15 @@ run: $(NAME)
 $(LFT_D):
 	$(MAKE) -C $(LFT_P)
 
+# Calls the makefile of the get_next_line library.
+$(GNL_D):
+	$(MAKE) -C $(GNL_P)
+
 # Makes the bonus part of the project.
 bonus: all
 
 # Links the executable.
-$(NAME): $(O_P) $(OBJ) $(LFT_D)
+$(NAME): $(O_P) $(OBJ) $(LFT_D) $(GNL_D)
 	$(CC) $(LDFLAGS) $(OBJ) -o $(NAME)
 
 # Compiles each source file individually.
@@ -68,6 +78,7 @@ $(O_P):
 clean:
 	- $(RM) $(H_O) $(OBJ) *~
 	- $(MAKE) -C $(LFT_P) clean
+	- $(MAKE) -C $(GNL_P) clean
 	- find . -name \*~ -print -delete
 
 # Removes everything created by this makefile.
@@ -75,6 +86,7 @@ fclean: clean
 	- $(RM) $(NAME)
 	- $(RM) -r $(O_P)
 	- $(MAKE) -C $(LFT_P) fclean
+	- $(MAKE) -C $(GNL_P) fclean
 
 # Removes all files created by this makefile and recompiles the project.
 re: fclean all

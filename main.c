@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "get_next_line.h"
 #include "libft/libft.h"
 
 #include "minishell.h"
@@ -84,7 +85,10 @@ int	main(void)
 	while (true)
 	{
 		signals_default();
-		line = readline(PROMPT " ");
+		if (isatty(0))
+			line = readline(PROMPT " ");
+		else
+			line = get_next_line(0);
 		//line = ft_strdup("hello|echj");
 		if (line == NULL)
 			break ; // TODO Call the exit builtin
