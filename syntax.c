@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/07 09:44:19 by mnies             #+#    #+#             */
+/*   Updated: 2022/02/07 12:28:23 by mnies            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include <unistd.h>
 
 #include "libft.h"
@@ -29,31 +42,33 @@ int	syntax_quotation_marks(char *string)
 	return (0);
 }
 
-int	syntax_parenthesis(char *string)
+int	syntax_parenthesis(char *str)
 {
 	int		i;
-	char	cha;
+	char	c;
 	int		open;
 
 	i = 0;
 	open = 0;
-	while (string[i] != '\0')
+	while (str[i] != '\0' && open >= 0)
 	{
-		cha = string[i];
-		if (cha == '\'' || cha == '\"')
-			while (string[i] != cha)
-				i++;
-		if (cha == '(')
-			open++;
-		if (cha == ')')
-			open--;
-		if (open < 0)
-			break ;
+		if (i != 0 && c == str[i] && (c == '\'' || c == '"'))
+			c = 'c';
+		else
+			c = str[i];
 		i++;
+		while ((str[i] != c && (c == '\'' || c == '"')) || str[i] == ' ')
+			i++;
+		if ((c != '|' && c != '&' && c != '(' && str[i] == '(') || (c == ')'
+				&& str[i] != '|' && str[i] != '&' && str[i] != ')'
+				&& str[i] != '\0'))
+			return (-1);
+		if (c == '(')
+			open++;
+		else if (c == ')')
+			open--;
 	}
-	if (open == 0)
-		return (0);
-	return (-1);
+	return (open);
 }
 
 int	syntax_guillemets(char *string)
@@ -66,11 +81,12 @@ int	syntax_guillemets(char *string)
 	{
 		cha = string[i];
 		if (cha == '\'' || cha == '\"')
-			while (string[i] != cha)
+			while (string[i + 1] != cha)
 				i++;
+		if (cha == '\'' || cha == '"' || cha == '<' || cha == '>')
+			i++;
 		if (cha == '<' || cha == '>')
 		{
-			i++;
 			if (string[i] == cha)
 				i++;
 			while (string[i] == ' ')
@@ -84,25 +100,26 @@ int	syntax_guillemets(char *string)
 	return (0);
 }
 
-int	syntax_followup(char *string)
+int	syntax_followup(char *str)
 {
 	int	i;
 
-	if (string[0] == '|' || string[0] == '&')
-		return (-1);
 	i = 0;
-	while (string[i] != '\0')
+	if (str[i] == '|' || str[i] == '&')
+		return (-1);
+	while (str[i] != '\0')
 	{
-		if ((string[i] == '|' && string[i + 1] == '|')
-			|| (string[i] == '|' && string[i + 1] == ' ')
-			|| (string[i] == '&' && string[i + 1] == '&')
-			|| (string[i] == '&' && string[i + 1] == ' '))
+		if (str[i] == '|' || str[i] == '&' || str[i] == '(')
 		{
-			i = i + 2;
-			while (string[i] == ' ')
+			i++;
+			if (str[i] != '&' && str[i - 1] == '&')
+				return (-1);
+			if ((str[i] == '|' || str[i] == '&') && str[i + 1] != str[i])
 				i++;
-			if (string[i] == '|' || string[i] == '&'
-				|| string[i] == '\n' || string[i] == '\0')
+			while (str[i] == ' ')
+				i++;
+			if (str[i] == '|' || str[i] == '&'
+				|| str[i] == '\n' || str[i] == '\0' || str[i] == ')')
 				return (-1);
 		}
 		i++;
@@ -110,18 +127,20 @@ int	syntax_followup(char *string)
 	return (0);
 }
 
-int	syntax_check(char *string)
+int	syntax_check(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (syntax_quotation_marks(string) == -1)
+	while (str[0] == ' ')
+		str++;
+	if (syntax_quotation_marks(str) == -1)
 		i = -1;
-	if (syntax_parenthesis(string) == -1)
+	else if (syntax_parenthesis(str) != 0)
 		i = -1;
-	if (syntax_guillemets(string) == -1)
+	else if (syntax_guillemets(str) == -1)
 		i = -1;
-	if (syntax_followup(string) == -1)
+	else if (syntax_followup(str) == -1)
 		i = -1;
 	if (i == -1)
 		ft_putendl_fd(NAME ": syntax error", 2);
