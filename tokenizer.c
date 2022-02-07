@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/07 04:35:11 by mnies             #+#    #+#             */
+/*   Updated: 2022/02/07 05:09:17 by mnies            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -26,11 +38,36 @@ int	tokenizer_check_or_and(t_token *token)
 		else if (c == '\'' || c == '"')
 			while (token->str[i + 1] != c)
 				i++;
-		else if ((c == '&' || c == '|') && token->str[i + 1] == c)
+		else if ((c == '&' || c == '|') && token->str[i + 1] == c && p_cnt == 0)
 			return (i + 1);
 		i++;
 	}
 	return (0);
+}
+
+int	tokenizer_apply_parenthesis(t_token *token)
+{
+	pid_t	child;
+	int		status;
+
+	child = fork();
+	if (child < 0)
+		return (-1); // TODO FREE TOKEN
+	if (0 == child)
+	{
+		while (token->str[token->strlen] != ')')
+			token->strlen--;
+		token->str[token->strlen] = '\0';
+		exit(tokenizer_func(token));
+	}
+	token->str = &token->str[token->strlen];
+	token->strlen = 0;
+	waitpid(child, &status, 0);
+	if (WIFEXITED(status))
+		token->exitstat = WEXITSTATUS(status);
+	else
+		token->exitstat = -1;
+	return (token->exitstat);
 }
 
 int	tokenizer_apply_or_and(t_token *token)
@@ -73,32 +110,6 @@ int	tokenizer_check_parenthesis(t_token *token)
 		return (1);
 	}
 	return (0);
-}
-
-int	tokenizer_apply_parenthesis(t_token *token)
-{
-	pid_t	child;
-	int		status;
-
-	child = fork();
-	if (child < 0)
-		return (-1); // TODO FREE TOKEN
-	if (0 == child)
-	{
-		while (token->str[token->strlen] != ')')
-			token->strlen--;
-		token->strlen--;
-		token->str[token->strlen] = '\0';
-		exit(tokenizer_func(token));
-	}
-	token->str = &token->str[token->strlen];
-	token->strlen = 0;
-	waitpid(child, &status, 0);
-	if (WIFEXITED(status))
-		token->exitstat = WEXITSTATUS(status);
-	else
-		token->exitstat = -1;
-	return (token->exitstat);
 }
 
 int	tokenizer_func(t_token *token)

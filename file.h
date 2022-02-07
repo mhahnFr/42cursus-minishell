@@ -23,6 +23,6 @@ void	file_append(t_token *token);
 /*
  * Opens fildes and write user typed content into it
  */
-//void	file_here_document(t_token token);
+void	file_here_document(t_token *token);
 
 #endif

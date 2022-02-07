@@ -85,10 +85,10 @@ int	main(void)
 	while (true)
 	{
 		signals_default();
-		if (isatty(0))
+		// if (isatty(0))
 			line = readline(PROMPT " ");
-		else
-			line = get_next_line(0);
+		// else
+		// 	line = get_next_line(0);
 		//line = ft_strdup("hello|echj");
 		if (line == NULL)
 			break ; // TODO Call the exit builtin
