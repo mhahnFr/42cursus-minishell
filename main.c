@@ -85,13 +85,19 @@ int	main(void)
 	while (true)
 	{
 		signals_default();
-		// if (isatty(0))
+		if (isatty(0))
 			line = readline(PROMPT " ");
-		// else
-		// 	line = get_next_line(0);
+		else
+			line = get_next_line(0);
 		//line = ft_strdup("hello|echj");
 		if (line == NULL)
+		{
 			break ; // TODO Call the exit builtin
+		}
+		int save_in, save_out;
+
+		save_in = dup(STDIN_FILENO);
+		save_out = dup(STDOUT_FILENO);
 		if (!utils_only_whitespace(line))
 		{
 			add_history(line);
@@ -103,6 +109,8 @@ int	main(void)
 				tokenizer_func(&token);
 			}
 		}
+		dup2(save_in, STDIN_FILENO);
+		dup2(save_out, STDOUT_FILENO);
 		free(line);
 	}
 	signals_reset_echoctl();
