@@ -63,7 +63,7 @@ bonus: all
 
 # Links the executable.
 $(NAME): $(O_P) $(OBJ) $(LFT_D) $(GNL_D)
-	$(CC) $(LDFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
 # Compiles each source file individually.
 $(O_P)/%.o: %.c $(HDR)
