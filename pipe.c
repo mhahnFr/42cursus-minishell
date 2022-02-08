@@ -42,6 +42,35 @@ int	pipe_check(t_token *token)
 	return (0);
 }
 
+pid_t	pipe_childs(int childno, t_token *token, int len, int pipe_fds[2])
+{
+	pid_t	child;
+
+	child = fork();
+	if (child < 0)
+		return (-1);
+	if (childno == 0 && 0 == child)
+	{
+		token->strlen = len - 1;
+		token->str[token->strlen] = '\0';
+		dup2(pipe_fds[1], 1);
+		close(pipe_fds[0]);
+		close(pipe_fds[1]);
+		exit(tokenizer_func(token));
+	}
+	else if (childno == 1 && 0 == child)
+	{
+		token->strlen = token->strlen - len - 1;
+		token->str = &token->str[len + 1];
+		token->str[token->strlen] = '\0';
+		dup2(pipe_fds[0], 0);
+		close(pipe_fds[0]);
+		close(pipe_fds[1]);
+		exit(tokenizer_func(token));
+	}
+	return (child);
+}
+
 int	pipe_func(t_token *token)
 {
 	int		pipe_fds[2];
@@ -52,38 +81,17 @@ int	pipe_func(t_token *token)
 
 	len = pipe_check(token);
 	if (pipe(pipe_fds) == -1)
-		return (-1); // TODO FREE TOKEN
-	child1 = fork();
-	if (child1 < 0)
-		return (-1); // TODO FREE TOKEN
-	if (0 == child1)
-	//if (1)
-	{
-		token->strlen = len - 1;
-		token->str[token->strlen] = '\0';
-		dup2(pipe_fds[1], 1);
-		close(pipe_fds[0]);
-		close(pipe_fds[1]);
-		exit(tokenizer_func(token));
-	}
-	child2 = fork();
-	if (child2 < 0)
-		return (-1); // TODO FREE TOKEN
-	if (0 == child2)
-	//if (1)
-	{
-		token->strlen = token->strlen - len - 1;
-		token->str = &token->str[len + 1];
-		token->str[token->strlen] = '\0';
-		dup2(pipe_fds[0], 0);
-		close(pipe_fds[0]);
-		close(pipe_fds[1]);
-		exit(tokenizer_func(token));
-	}
-	close(pipe_fds[0]);
-	close(pipe_fds[1]);
+		return (-1);
+	child1 = pipe_childs(0, token, len, pipe_fds);
+	if (child1 == -1)
+		return (-1);
+	child2 = pipe_childs(1, token, len, pipe_fds);
+	if (child2 == -1)
+		return (-1);
 	waitpid(child1, NULL, 0);
 	waitpid(child2, &status, 0);
+	close(pipe_fds[0]);
+	close(pipe_fds[1]);
 	if (WIFEXITED(status))
 		token->exitstat = WEXITSTATUS(status);
 	else

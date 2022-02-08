@@ -12,4 +12,6 @@
  */
 char	*str_copy(t_token *token, int suffixlen);
 
+int		str_wildcard(char *s, char **dst, char c);
+
 #endif

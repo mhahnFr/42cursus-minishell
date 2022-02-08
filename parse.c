@@ -32,11 +32,8 @@ void	parse_c_arg(t_token *token)
 	token->c_args[i + 1] = NULL;
 }
 
-#include <unistd.h>
-
 int	parse_func(t_token *token)
 {
-	
 	while (token->strlen > 0)
 	{
 		if ((token->str)[0] == '>' && (token->str)[1] == '>')

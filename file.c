@@ -75,8 +75,8 @@ void	file_here_document(t_token *token)
 	while (1)
 	{	
 		line = readline(">" " ");
-		if(line == NULL || !ft_strncmp(line, eof, ft_strlen(eof) + 1))
-			break;
+		if (line == NULL || !ft_strncmp(line, eof, ft_strlen(eof) + 1))
+			break ;
 		write(pint[1], line, ft_strlen(line));
 		write(pint[1], "\n", 1);
 		free(line);

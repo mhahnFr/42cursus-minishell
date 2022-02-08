@@ -1,4 +1,4 @@
-int	wildcard(char *s, char **dst, char c)
+int	str_wildcard(char *s, char **dst, char c)
 {
 	(void) s;
 	(void) dst;
