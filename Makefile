@@ -44,7 +44,7 @@ all: $(NAME)
 
 # Runs the norm checker on all registered files.
 norm:
-	norminette $(SRC) $(HDR) | grep :
+	norminette $(SRC) $(HDR) | grep -v "header"
 
 # Runs the executable.
 run: $(NAME)
