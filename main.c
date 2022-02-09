@@ -93,7 +93,7 @@ int	main(void)
 		else
 			line = get_next_line(0);
 		if (line == NULL)
-			builtin_prompt_exit(&token);
+			builtin_exit(NULL, &token);
 		int save_in, save_out;
 
 		save_in = dup(STDIN_FILENO);
