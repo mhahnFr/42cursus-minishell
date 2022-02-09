@@ -80,7 +80,8 @@ int	main(void)
 	char	*line;
 
 	token.c_args = NULL;
-	print_header();
+	if (isatty(0))
+		print_header();
 	token.envp = copy_env();
 	while (true)
 	{
