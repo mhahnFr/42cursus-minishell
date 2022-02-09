@@ -18,7 +18,7 @@ char	**copy_env(void)
 	size_t		index;
 	extern char	**environ;
 
-	ret = malloc(get_env_size(environ) * sizeof(char *));
+	ret = malloc((get_env_size(environ) + 1) * sizeof(char *));
 	if (ret == NULL)
 		return (NULL); // TODO Error handling
 	index = 0;
