@@ -8,6 +8,7 @@
 #include "get_next_line.h"
 #include "libft/libft.h"
 
+#include "exit.h"
 #include "minishell.h"
 #include "signals.h"
 #include "syntax.h"
@@ -90,11 +91,8 @@ int	main(void)
 			line = readline(PROMPT " ");
 		else
 			line = get_next_line(0);
-		//line = ft_strdup("hello|echj");
 		if (line == NULL)
-		{
-			break ; // TODO Call the exit builtin
-		}
+			builtin_prompt_exit(&token);
 		int save_in, save_out;
 
 		save_in = dup(STDIN_FILENO);
