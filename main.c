@@ -84,6 +84,7 @@ int	main(void)
 	if (isatty(0))
 		print_header();
 	token.envp = copy_env();
+	token.exitstat = 0;
 	while (true)
 	{
 		signals_default();
@@ -107,6 +108,8 @@ int	main(void)
 				signals_execution();
 				tokenizer_func(&token);
 			}
+			else
+				token.exitstat = 2;
 		}
 		dup2(save_in, STDIN_FILENO);
 		dup2(save_out, STDOUT_FILENO);

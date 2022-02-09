@@ -49,6 +49,7 @@ bool	exec_run(t_token *token, char *env)
 	{
 		ft_putstr_fd(NAME ": command not found: ", 2);
 		ft_putendl_fd(token->c_args[0], 2);
+		token->exitstat = 127;
 		utils_free_double_pointer(&token->c_args);
 		return (-1);
 	}
