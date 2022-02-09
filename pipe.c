@@ -20,11 +20,9 @@ int	pipe_check(t_token *token)
 {
 	int		i;
 	int		prthcnt;
-	char	qtm;
 
 	i = 0;
 	prthcnt = 0;
-	qtm = ' ';
 	while (i < token->strlen)
 	{
 		if ((token->str)[i] == '|')
