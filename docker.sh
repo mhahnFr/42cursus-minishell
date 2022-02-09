@@ -1,0 +1,1 @@
+docker run -ti -v $(PWD):/dock memory-test:0.1 bash -c "cd /dock; gcc *.c *.h -Iusr/include/readline/readline.h -I./libft -Llibft -lft -lreadline -Wall -Werror -Wextra; valgrind --leak-check=full ./a.out"
