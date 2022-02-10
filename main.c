@@ -93,7 +93,10 @@ int	main(void)
 		else
 			line = get_next_line(0);
 		if (line == NULL)
-			builtin_exit(NULL, &token);
+		{
+			line = "exit";
+			printf("exit\n");
+		}
 		int save_in, save_out;
 
 		save_in = dup(STDIN_FILENO);
