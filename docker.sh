@@ -1,1 +1,1 @@
-docker run -ti -v $(PWD):/dock memory-test:0.1 bash -c "cd /dock; gcc *.c *.h -I./libft -Llibft -lft -I./get_next_line -Lget_next_line -lgnl -lreadline -Wall -Werror -Wextra; valgrind --leak-check=full ./a.out"
+docker run -ti -v $(PWD):/dock memory-test:0.1 bash -c "cd /dock; gcc *.c *.h libft/*.c libft/*.h get_next_line/*.c get_next_line/*.h -I./libft -Llibft -lft -I./get_next_line -Lget_next_line -lgnl -lreadline -D BUFFER_SIZE=42; valgrind --leak-check=full ./a.out; rm *.h.gch; rm a.out"
