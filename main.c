@@ -95,7 +95,8 @@ int	main(void)
 		if (line == NULL)
 		{
 			line = "exit";
-			printf("exit\n");
+			if (isatty(0))
+				printf("exit\n");
 		}
 		int save_in, save_out;
 
