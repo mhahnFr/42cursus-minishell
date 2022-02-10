@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "utils.h"
+#include "token.h"
 
 bool	utils_is_whitespace(const char c)
 {
@@ -52,17 +53,30 @@ bool	string_equals(const char *self, const char *other)
 	return (true);
 }
 
-void	utils_free_double_pointer(char ***double_pointer)
+int	utils_free_token(t_token *token, int mode)
 {
 	int	i;
 
 	i = 0;
-	while (*double_pointer != NULL && (*double_pointer)[i] != NULL)
+	while (token->c_args != NULL && token->c_args[i] != NULL)
 	{
-		free((*double_pointer)[i]);
+		free(token->c_args[i]);
 		i++;
 	}
-	if (*double_pointer != NULL)
-		free(*double_pointer);
-	*double_pointer = NULL;
+	if (token->c_args != NULL)
+		free(token->c_args);
+	token->c_args = NULL;
+	if (mode == 1)
+		free(token->lptr);
+	if (mode == 2 && token->envp != NULL)
+	{
+		i = 0;
+		while (token->envp[i] != NULL)
+		{
+			free(token->envp[i]);
+			i++;
+		}
+		free(token->envp);
+	}
+	return (token->exitstat);
 }

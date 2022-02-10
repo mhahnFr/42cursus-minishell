@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 04:35:11 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/07 15:00:48 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/10 16:25:52 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "pipe.h"
 #include "parse.h"
 #include "libft.h"
+#include "utils.h"
 
 int	tokenizer_check_or_and(t_token *token)
 {
@@ -60,14 +61,12 @@ int	tokenizer_apply_parenthesis(t_token *token)
 		token->str[token->strlen] = '\0';
 		exit(tokenizer_func(token));
 	}
-	token->str = &token->str[token->strlen];
-	token->strlen = 0;
 	waitpid(child, &status, 0);
 	if (WIFEXITED(status))
 		token->exitstat = WEXITSTATUS(status);
 	else
 		token->exitstat = -1;
-	return (token->exitstat);
+	return (utils_free_token(token, 1));
 }
 
 int	tokenizer_apply_or_and(t_token *token)
@@ -115,7 +114,7 @@ int	tokenizer_check_parenthesis(t_token *token)
 int	tokenizer_func(t_token *token)
 {
 	if (token->str[0] == '\0')
-		return (token->exitstat);
+		return (utils_free_token(token, 1));
 	if (tokenizer_check_or_and(token))
 		return (tokenizer_apply_or_and(token));
 	else if (pipe_check(token))

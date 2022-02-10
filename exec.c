@@ -50,15 +50,15 @@ bool	exec_run(t_token *token, char *env)
 		ft_putstr_fd(NAME ": command not found: ", 2);
 		ft_putendl_fd(token->c_args[0], 2);
 		token->exitstat = 127;
-		utils_free_double_pointer(&token->c_args);
-		return (-1);
+		return (utils_free_token(token, 1));
 	}
 	child = fork();
 	if (0 == child)
 		exit(execve(cmdstr, token->c_args, token->envp));
 	if (0 > child)
 		return (false); // TODO errormanagment
-	utils_free_double_pointer(&token->c_args);
+	utils_free_token(token, 0);
+	free(cmdstr);
 	waitpid(child, &status, 0);
 	if (WIFEXITED(status))
 		token->exitstat = WEXITSTATUS(status);

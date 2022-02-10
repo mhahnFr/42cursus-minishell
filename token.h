@@ -11,6 +11,7 @@ typedef struct s_token {
 	int				exitstat;
 	char			**c_args;
 	char			**envp;
+	char			*lptr;
 }				t_token;
 
 /*

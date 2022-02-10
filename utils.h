@@ -3,6 +3,8 @@
 
 # include <stdbool.h>
 
+# include "token.h"
+
 /*
  * Returns wether the given character is a whitespace.
  */
@@ -15,10 +17,10 @@ bool	utils_is_whitespace(const char c);
 bool	utils_only_whitespace(const char *string);
 
 /*
- * Frees a double pointer to char. Everything ther has to be allocated with
+ * Frees token. Everything ther has to be allocated with
  * malloc to avoid freeing unallocated memmory.
  */
-void	utils_free_double_pointer(char ***double_pointer);
+int		utils_free_token(t_token *token, int mode);
 
 /*
  * Compares the two given strings literally. If one of them is null, false is

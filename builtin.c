@@ -36,6 +36,6 @@ int	builtin_exec(t_token *t)
 		exit_status = builtin_export(t->c_args, &t->envp);
 	else if (string_equals(arg, "exit"))
 		exit_status = builtin_exit(t->c_args, t);
-	utils_free_double_pointer(&t->c_args);
+	utils_free_token(t, 0);
 	return (exit_status);
 }

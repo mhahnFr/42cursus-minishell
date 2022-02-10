@@ -4,6 +4,7 @@
 
 #include "token.h"
 #include "tokenizer.h"
+#include "utils.h"
 
 int	pipe_skip_qtm_and_move(char *str)
 {
@@ -94,6 +95,5 @@ int	pipe_func(t_token *token)
 		token->exitstat = WEXITSTATUS(status);
 	else
 		token->exitstat = -1;
-	token->str = &token->str[token->strlen];
-	return (tokenizer_func(token));
+	return (utils_free_token(token, 1));
 }

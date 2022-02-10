@@ -109,6 +109,7 @@ int	main(void)
 			{
 				token.strlen = ft_strlen(line);
 				token.str = line;
+				token.lptr = token.str;
 				signals_execution();
 				tokenizer_func(&token);
 			}
@@ -117,8 +118,8 @@ int	main(void)
 		}
 		dup2(save_in, STDIN_FILENO);
 		dup2(save_out, STDOUT_FILENO);
-		free(line);
 	}
+	utils_free_token(&token, 2);
 	signals_reset_echoctl();
 	return (0);
 }

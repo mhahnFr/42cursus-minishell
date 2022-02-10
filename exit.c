@@ -9,9 +9,6 @@ int	builtin_exit(char **argv, t_token *token)
 	{
 		
 	}
-	if (token->c_args != NULL)
-		utils_free_double_pointer(&token->c_args);
-	utils_free_double_pointer(&token->envp);
-	exit(token->exitstat);
+	exit(utils_free_token(token, 2));
 	return (0);
 }
