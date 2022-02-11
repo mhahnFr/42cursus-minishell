@@ -52,7 +52,7 @@ int	str_get_malloc_len(char **env, char *s, int strlen, char c)
 			len++;
 		else if ((s[i - 1] == '$' || s[i - 1] == '*') && c != '\'')
 		{
-			len = len + str_replace_len(env, &s[i], NULL, c);
+			len = len + str_replace_len(env, &s[i - 1], NULL, c);
 			while ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')
 				|| (s[i] >= '0' && s[i] <= '9') || s[i] == '_')
 				i++;
