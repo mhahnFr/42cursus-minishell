@@ -85,6 +85,8 @@ int	main(void)
 		print_header();
 	token.envp = copy_env();
 	token.exitstat = 0;
+	token.fdin = - 1;
+	token.fdout = - 1;
 	while (true)
 	{
 		signals_default();
@@ -98,10 +100,6 @@ int	main(void)
 			if (isatty(0))
 				printf("exit\n");
 		}
-		int save_in, save_out;
-
-		save_in = dup(STDIN_FILENO);
-		save_out = dup(STDOUT_FILENO);
 		if (!utils_only_whitespace(line))
 		{
 			add_history(line);
@@ -116,8 +114,6 @@ int	main(void)
 			else
 				token.exitstat = 2;
 		}
-		dup2(save_in, STDIN_FILENO);
-		dup2(save_out, STDOUT_FILENO);
 	}
 	utils_free_token(&token, 2);
 	signals_reset_echoctl();

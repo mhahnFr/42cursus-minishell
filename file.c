@@ -24,7 +24,9 @@ void	file_open(t_token *token)
 		free(filestr);
 		exit(-1); // TODO erro managment
 	}
-	dup2(i, 0);
+	if (token->fdin != -1)
+		close(token->fdin);
+	token->fdin = i;
 }
 
 void	file_write(t_token *token)
@@ -34,13 +36,15 @@ void	file_write(t_token *token)
 
 	token_move_one_char(token);
 	filestr = str_copy(token, 0);
-	i = open(filestr, O_WRONLY | O_CREAT | O_TRUNC, 644);
+	i = open(filestr, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (i == -1)
 	{
 		free(filestr);
 		exit(-1); // TODO erro managment
 	}
-	dup2(i, 1);
+	if (token->fdout != -1)
+		close(token->fdout);
+	token->fdout = i;
 }
 
 void	file_append(t_token *token)
@@ -51,13 +55,15 @@ void	file_append(t_token *token)
 	token_move_one_char(token);
 	token_move_one_char(token);
 	filestr = str_copy(token, 0);
-	i = open(filestr, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	i = open(filestr, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (i == -1)
 	{
 		free(filestr);
 		exit(-1); // TODO erro managment
 	}
-	dup2(i, 1);
+	if (token->fdout != -1)
+		close(token->fdout);
+	token->fdout = i;
 }
 
 void	file_here_document(t_token *token)
@@ -81,8 +87,9 @@ void	file_here_document(t_token *token)
 		write(pint[1], "\n", 1);
 		free(line);
 	}
-	dup2(pint[0], STDIN_FILENO);
-	close(pint[0]);
 	close(pint[1]);
+	if (token->fdin != -1)
+		close(token->fdin);
+	token->fdin = pint[0];
 	signals_execution();
 }

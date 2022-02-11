@@ -52,9 +52,10 @@ pid_t	pipe_childs(int childno, t_token *token, int len, int pipe_fds[2])
 	{
 		token->strlen = len - 1;
 		token->str[token->strlen] = '\0';
-		dup2(pipe_fds[1], 1);
+		if (token->fdout != -1)
+			close(token->fdout);
+		token->fdout = pipe_fds[1];
 		close(pipe_fds[0]);
-		close(pipe_fds[1]);
 		exit(tokenizer_func(token));
 	}
 	else if (childno == 1 && 0 == child)
@@ -62,8 +63,9 @@ pid_t	pipe_childs(int childno, t_token *token, int len, int pipe_fds[2])
 		token->strlen = token->strlen - len - 1;
 		token->str = &token->str[len + 1];
 		token->str[token->strlen] = '\0';
-		dup2(pipe_fds[0], 0);
-		close(pipe_fds[0]);
+		if (token->fdin != -1)
+			close(token->fdin);
+		token->fdin = pipe_fds[0];
 		close(pipe_fds[1]);
 		exit(tokenizer_func(token));
 	}

@@ -12,6 +12,8 @@ typedef struct s_token {
 	char			**c_args;
 	char			**envp;
 	char			*lptr;
+	int				fdin;
+	int				fdout;
 }				t_token;
 
 /*

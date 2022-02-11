@@ -54,7 +54,19 @@ bool	exec_run(t_token *token, char *env)
 	}
 	child = fork();
 	if (0 == child)
+	{
+		if (token->fdout != -1)
+		{
+			dup2(token->fdout, 1);
+			close(token->fdout);
+		}
+		if (token->fdin != -1)
+		{
+			dup2(token->fdin, 0);
+			close(token->fdin);
+		}
 		exit(execve(cmdstr, token->c_args, token->envp));
+	}
 	if (0 > child)
 		return (false); // TODO errormanagment
 	utils_free_token(token, 0);
