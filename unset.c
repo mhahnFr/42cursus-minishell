@@ -5,7 +5,7 @@
 #include "unset.h"
 #include "utils.h"
 
-static void	builtin_unset_remove(char *var, char ***env)
+static bool	builtin_unset_remove(char *var, char ***env)
 {
 	char	**new_env;
 	char	*del;
@@ -23,6 +23,11 @@ static void	builtin_unset_remove(char *var, char ***env)
 	if (del != NULL)
 	{
 		new_env = malloc(get_env_size((const char **) *env) * sizeof(char *));
+		if (new_env == NULL)
+		{
+			ft_putendl_fd("Malloc failed in the unset builtin!", 2);
+			return (false);
+		}
 		i = 0;
 		j = 0;
 		while ((*env)[i] != NULL)
@@ -39,6 +44,7 @@ static void	builtin_unset_remove(char *var, char ***env)
 		free(del);
 		*env = new_env;
 	}
+	return (true);
 }
 
 int	builtin_unset(char **argv, char ***env)
@@ -51,7 +57,10 @@ int	builtin_unset(char **argv, char ***env)
 	while (argv[i] != NULL)
 	{
 		if (utils_is_identifier(argv[i]))
-			builtin_unset_remove(argv[i], env);
+		{
+			if (!builtin_unset_remove(argv[i], env))
+				status = 1;
+		}
 		else
 		{
 			status = 1;
