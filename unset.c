@@ -5,6 +5,7 @@
 #include "unset.h"
 #include "utils.h"
 
+#include <stdio.h>
 static void	builtin_unset_remove(char *var, char ***env)
 {
 	char	**new_env;
@@ -16,10 +17,11 @@ static void	builtin_unset_remove(char *var, char ***env)
 	i = 0;
 	while ((*env)[i] != NULL)
 	{
-		if (string_starts_with((*env)[i], ft_strjoin(var, "=")))
+		if (string_starts_with_ec((*env)[i], var, '='))
 			del = (*env)[i];
 		i++;
 	}
+	printf("To delete: %s\n", del);
 	if (del != NULL)
 	{
 		new_env = malloc(get_env_size((const char **) *env) * sizeof(char *));

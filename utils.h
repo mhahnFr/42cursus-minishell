@@ -50,6 +50,9 @@ bool	string_equals(const char *self, const char *other);
  */
 bool	string_starts_with(const char *self, const char *start);
 
+bool	string_starts_with_ec(
+			const char *self, const char *start, const char end);
+
 /*
  * Calculates the count of elements in the given environment. Given null, zero
  * is returned.

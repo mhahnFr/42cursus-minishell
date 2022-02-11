@@ -2,7 +2,10 @@
 
 #include "utils.h"
 
-bool	string_starts_with(const char *self, const char *start)
+bool	string_starts_with_ec(
+			const char *self,
+			const char *start,
+			const char end)
 {
 	size_t	i;
 
@@ -18,9 +21,16 @@ bool	string_starts_with(const char *self, const char *start)
 			return (false);
 		i++;
 	}
+	if (end != -1 && self[i] != end)
+		return (false);
 	if (self[i] == '\0' && start[i] != '\0')
 		return (false);
 	return (true);
+}
+
+bool	string_starts_with(const char *self, const char *start)
+{
+	return (string_starts_with_ec(self, start, -1));
 }
 
 bool	string_equals(const char *self, const char *other)
