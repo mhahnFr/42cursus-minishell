@@ -87,10 +87,10 @@ int	pipe_func(t_token *token)
 	child2 = pipe_childs(1, token, len, pipe_fds);
 	if (child2 == -1)
 		return (-1);
-	waitpid(child1, NULL, 0);
-	waitpid(child2, &status, 0);
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
+	waitpid(child1, NULL, 0);
+	waitpid(child2, &status, 0);
 	if (WIFEXITED(status))
 		token->exitstat = WEXITSTATUS(status);
 	else
