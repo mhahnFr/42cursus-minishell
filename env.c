@@ -41,7 +41,7 @@ char	*get_envar(char **env, char *str, int *slen, char mode)
 			if (mode != '\'' && mode != '"')
 				while ((*env)[j + *slen] == ' ' && (*env)[j + *slen - 1] == ' ')
 					(*slen)--;
-			return (&(*env)[j + 1]);
+			return (&env[0][j + 1]);
 		}
 		env++;
 	}
