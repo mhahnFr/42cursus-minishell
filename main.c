@@ -93,7 +93,11 @@ int	main(void)
 		if (isatty(0))
 			line = readline(PROMPT " ");
 		else
+		{
 			line = get_next_line(0);
+			if (line != NULL)
+				line[ft_strlen(line) - 1] = '\0';
+		}
 		if (line == NULL)
 		{
 			line = "exit";

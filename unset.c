@@ -1,14 +1,28 @@
 #include "libft.h"
 
 #include "unset.h"
+#include "utils.h"
 
-int	builtin_unset(char **argv, char **env)
+static void	builtin_unset_remove(char *var, char ***env)
 {
-	if (argv[1] == NULL)
-	{
-		ft_putendl_fd("Not enough arguments!\n", 2);
-		return (1);
-	}
+	(void) var;
 	(void) env;
-	return (0);
+}
+
+int	builtin_unset(char **argv, char ***env)
+{
+	int		status;
+	size_t	i;
+
+	status = 0;
+	i = 1;
+	while (argv[i] != NULL)
+	{
+		if (utils_is_identifier(argv[i]))
+			builtin_unset_remove(argv[i], env);
+		else
+			status = 1;
+		i++;
+	}
+	return (status);
 }

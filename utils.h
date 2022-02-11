@@ -23,6 +23,13 @@ bool	utils_only_whitespace(const char *string);
 int		utils_free_token(t_token *token, int mode);
 
 /*
+ * Returns wether the given string represents a valid indentifier. That is, it
+ * only contains alphanumeric characters and does not start with a digit. If no
+ * string is given, false is returned.
+ */
+bool	utils_is_identifier(char *string);
+
+/*
  * Compares the two given strings literally. If one of them is null, false is
  * returned, if both are null, true is returned. Otherwise, they are compared.
  */
