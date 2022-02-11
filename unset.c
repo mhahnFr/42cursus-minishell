@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "libft.h"
 
 #include "unset.h"
@@ -5,8 +7,32 @@
 
 static void	builtin_unset_remove(char *var, char ***env)
 {
-	(void) var;
-	(void) env;
+	char	**new_env;
+	char	*del;
+	size_t	i;
+
+	del = NULL;
+	i = 0;
+	while ((*env)[i] != NULL)
+	{
+		if (string_starts_with((*env)[i], var))
+			del = (*env)[i];
+		i++;
+	}
+	if (del != NULL)
+	{
+		new_env = malloc(get_env_size((const char **) *env));
+		i = 0;
+		while ((*env)[i] != NULL)
+		{
+			if ((*env)[i] != del)
+				new_env[i] = (*env)[i];
+			i++;
+		}
+		new_env[i] = NULL;
+		utils_free_char_array(*env);
+		*env = new_env;
+	}
 }
 
 int	builtin_unset(char **argv, char ***env)
@@ -21,7 +47,12 @@ int	builtin_unset(char **argv, char ***env)
 		if (utils_is_identifier(argv[i]))
 			builtin_unset_remove(argv[i], env);
 		else
+		{
 			status = 1;
+			ft_putstr_fd("Invalid identifier: \'", 2);
+			ft_putstr_fd(argv[i], 2);
+			ft_putendl_fd("\'", 2);
+		}
 		i++;
 	}
 	return (status);
