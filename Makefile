@@ -4,12 +4,12 @@ NAME = minishell
 # The source files.
 SRC = main.c signals.c signals_execution.c str.c str_2.c parse.c builtin.c \
 	  unset.c signals_default.c syntax.c utils.c tokenizer.c token.c pwd.c \
-	  pipe.c exec.c file.c environment.c cd.c echo.c env.c exit.c export.c
+	  pipe.c exec.c file.c environment.c cd.c echo.c env.c exit.c export.c \
+	  utils_is_identifier.c utils_strings.c
 
 # The header files.
 HDR = signals.h syntax.h utils.h token.h exec.h file.h builtin.h pwd.h echo.h \
-	  tokenizer.h pipe.h str.h parse.h env.h exit.h cd.h \
-	  export.h unset.h
+	  tokenizer.h pipe.h str.h parse.h env.h exit.h cd.h export.h unset.h
 
 # The path to the libft.
 LFT_P = ./libft
@@ -25,6 +25,9 @@ GNL_D = $(GNL_P)/libgnl.a
 
 # the path to the object files.
 O_P = ./bin
+
+# The folder containing the testing script.
+T_F = ./tests
 
 # The compiled source files.
 OBJ = $(addprefix $(O_P)/,$(SRC:.c=.o))
@@ -49,6 +52,10 @@ norm:
 # Runs the executable.
 run: $(NAME)
 	./$(NAME)
+
+# Runs the tester.
+test: $(NAME)
+	cd $(T_F) && ./tester.sh a
 
 # Calls the makefile of the libft.
 $(LFT_D):
@@ -91,4 +98,4 @@ fclean: clean
 re: fclean all
 
 # A list with all always dirty rules.
-.PHONY: all clean flcean re bonus norm run
+.PHONY: all clean flcean re bonus norm run test

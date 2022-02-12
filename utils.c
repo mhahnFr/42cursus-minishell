@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include <stdlib.h>
 
 #include "utils.h"
@@ -32,25 +31,19 @@ bool	utils_only_whitespace(const char *string)
 	return (true);
 }
 
-bool	string_equals(const char *self, const char *other)
+void	utils_free_char_array(char **array)
 {
 	size_t	i;
 
-	if ((self == NULL && other != NULL)
-		|| (other == NULL && self != NULL))
-		return (false);
-	else if (self == NULL && other == NULL)
-		return (true);
+	if (array == NULL)
+		return ;
 	i = 0;
-	while (self[i] != '\0' && other[i] != '\0')
+	while (array[i] != NULL)
 	{
-		if (self[i] != other[i])
-			return (false);
+		free(array[i]);
 		i++;
 	}
-	if (self[i] != other[i])
-		return (false);
-	return (true);
+	free(array);
 }
 
 int	utils_free_token(t_token *token, int mode)

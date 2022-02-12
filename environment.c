@@ -2,7 +2,9 @@
 
 #include "libft.h"
 
-static size_t	get_env_size(char **env)
+#include "utils.h"
+
+size_t	get_env_size(const char **env)
 {
 	size_t	size;
 
@@ -18,7 +20,7 @@ char	**copy_env(void)
 	size_t		index;
 	extern char	**environ;
 
-	ret = malloc((get_env_size(environ) + 1) * sizeof(char *));
+	ret = malloc((get_env_size((const char **) environ) + 1) * sizeof(char *));
 	if (ret == NULL)
 		return (NULL); // TODO Error handling
 	index = 0;
