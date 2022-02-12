@@ -1,6 +1,11 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
+typedef struct s_heredoc {
+	int					fd;
+	struct s_heredoc	*next;
+}				t_heredoc;
+
 /*
  * Represents a token. Consists of a pointer to the next and the previous
  * token, the type and the optional content.
@@ -14,16 +19,25 @@ typedef struct s_token {
 	char			*lptr;
 	int				fdin;
 	int				fdout;
+	t_heredoc		*heredoc;
 }				t_token;
 
 /*
- * Moves pointer token.str to the next argument
+ * Fills heredoc list
  */
-void	token_next_arg(t_token *token);
+t_heredoc	*token_get_heredocs(char *str);
+
+/*
+ * Removes heredoc from heredoc list
+ * i == 0 -> removes at the beginning
+ * i != 0 -> removes at the end
+ */
+void	token_remove_heredoc(t_token *token, int i);
 
 /*
  * Moves pointer for one char
  */
 void	token_move_one_char(t_token *token);
+
 
 #endif

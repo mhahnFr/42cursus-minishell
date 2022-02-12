@@ -41,22 +41,43 @@ int	pipe_check(t_token *token)
 	return (0);
 }
 
+void	pipe_split_heredoc(t_token *token, int childno, int len)
+{
+	int			i;
+	int			j;
+
+	i = 0;
+	while (token->str[i] != '\0')
+	{
+		j = i;
+		if (token->str[i] == '\'' || token->str[i] == '"')
+		{
+			while (token->str[i + 1] != token->str[j])
+				i++;
+			i = i + 2;
+		}
+		if (token->str[i] == '<' && token->str[i + 1] == '<'
+			&& ((i > len && childno == 0) || (i < len && childno == 1)))
+			token_remove_heredoc(token, !childno);
+		i++;
+	}
+}
+
 pid_t	pipe_childs(int childno, t_token *token, int len, int pipe_fds[2])
 {
 	pid_t	child;
 
 	child = fork();
-	if (child < 0)
-		return (-1);
-	if (childno == 0 && 0 == child)
+	if (child != 0)
+		return (child);
+	pipe_split_heredoc(token, childno, len);
+	if (childno == 0 ) //&& 0 == child
 	{
 		token->strlen = len - 1;
 		token->str[token->strlen] = '\0';
 		if (token->fdout != -1)
 			close(token->fdout);
 		token->fdout = pipe_fds[1];
-		close(pipe_fds[0]);
-		exit(tokenizer_func(token));
 	}
 	else if (childno == 1 && 0 == child)
 	{
@@ -66,10 +87,9 @@ pid_t	pipe_childs(int childno, t_token *token, int len, int pipe_fds[2])
 		if (token->fdin != -1)
 			close(token->fdin);
 		token->fdin = pipe_fds[0];
-		close(pipe_fds[1]);
-		exit(tokenizer_func(token));
 	}
-	return (child);
+	close(pipe_fds[childno]);
+	exit(tokenizer_func(token));
 }
 
 int	pipe_func(t_token *token)
@@ -84,10 +104,10 @@ int	pipe_func(t_token *token)
 	if (pipe(pipe_fds) == -1)
 		return (-1);
 	child1 = pipe_childs(0, token, len, pipe_fds);
-	if (child1 == -1)
+	if (child1 < 0)
 		return (-1);
 	child2 = pipe_childs(1, token, len, pipe_fds);
-	if (child2 == -1)
+	if (child2 < 0)
 		return (-1);
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);

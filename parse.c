@@ -41,7 +41,7 @@ int	parse_func(t_token *token)
 		else if (token->str[0] == '>')
 			file_write(token);
 		else if ((token->str)[0] == '<' && (token->str)[1] == '<')
-			file_here_document(token);
+			file_heredoc(token);
 		else if (token->str[0] == '<')
 			file_open(token);
 		else if (token->str[0] != ' ')

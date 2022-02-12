@@ -69,6 +69,10 @@ bool	exec_run(t_token *token, char *env)
 	}
 	if (0 > child)
 		return (false); // TODO errormanagment
+	if (token->fdout != -1)
+		close(token->fdout);
+	if (token->fdin != -1)
+		close(token->fdin);
 	utils_free_token(token, 0);
 	free(cmdstr);
 	waitpid(child, &status, 0);

@@ -85,8 +85,8 @@ int	main(void)
 		print_header();
 	token.envp = copy_env();
 	token.exitstat = 0;
-	token.fdin = - 1;
-	token.fdout = - 1;
+	token.fdin = -1;
+	token.fdout = -1;
 	while (true)
 	{
 		signals_default();
@@ -105,9 +105,11 @@ int	main(void)
 			add_history(line);
 			if (syntax_check(line) == 0)
 			{
+				
 				token.strlen = ft_strlen(line);
 				token.str = line;
 				token.lptr = token.str;
+				token.heredoc = token_get_heredocs(token.str);
 				signals_execution();
 				tokenizer_func(&token);
 			}
