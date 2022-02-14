@@ -80,7 +80,8 @@ static bool	string_compare_until(char *self, char *other, char end)
 		|| (self == NULL && other != NULL))
 		return (false);
 	i = 0;
-	while (self[i] != '\0' && other[i] != '\0' && other[i] != end && self[i] != end)
+	while (self[i] != '\0' && other[i] != '\0'
+		&& other[i] != end && self[i] != end)
 	{
 		if (self[i] != other[i])
 			return (false);
@@ -121,7 +122,8 @@ static int	builtin_export_checker(t_token *t)
 	while (t->c_args[i] != NULL)
 	{
 		if ((ft_strchr(t->c_args[i], '=') != NULL
-			&& utils_is_identifier_length(t->c_args[i], ft_strchr(t->c_args[i], '=') - t->c_args[i]))
+				&& utils_is_identifier_length(t->c_args[i],
+					ft_strchr(t->c_args[i], '=') - t->c_args[i]))
 			|| utils_is_identifier(t->c_args[i]))
 			builtin_export_update(t, t->c_args[i]);
 		else
