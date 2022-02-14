@@ -28,7 +28,7 @@ void	parse_c_arg(t_token *token)
 	}
 	if (tmp != NULL)
 		free(tmp);
-	token->c_args[i] = str_copy(token, 0);
+	token->c_args[i] = str_copy(token);
 	token->c_args[i + 1] = NULL;
 }
 
