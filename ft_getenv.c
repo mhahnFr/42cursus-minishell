@@ -28,7 +28,7 @@ char	*ft_getenv(const char *var, char **env)
 	{
 		entry = ft_strchr(entry, '=');
 		if (entry != NULL)
-			return (entry);
+			return (entry + 1);
 	}
 	return ("");
 }
