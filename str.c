@@ -31,32 +31,32 @@ int	str_replace_len(t_token *token, char *s, char **dst, char c)
 	return (i);
 }
 
-int	str_get_malloc_len(t_token *token, char *s, int strlen, char c)
+int	str_get_malloc_len(t_token *t, char *s, int m, int len)
 {
-	int		len;
 	int		i;
+	int		j;
 
-	i = 0;
-	len = 0;
-	while (((s[i] != ' ' && s[i] != '<' && s[i] != '>')
-			|| c == '"' || c == '\'') && i < strlen)
+	j = 0;
+	while (((s[j] != ' ' && s[j] != '<' && s[j] != '>') || m == 1) && j < t->strlen)
 	{
-		if (c != '\'' && c != '"')
-			c = s[i];
-		else if (c == s[i])
-			c = s[i + 1];
-		i++;
-		if ((s[i - 1] != '"' && s[i - 1] != '\'' && s[i - 1] != '$')
-			|| (s[i - 1] == '$' && c == '\'') || ((s[i - 1] == '"'
-					|| s[i - 1] == '\'') && (c == '\'' || c == '"')))
+		i = 0;
+		while (m == 0 && s[j] == '\'' && (s[j + i] != '\'' || i == 0))
+			i++;
+		if (i != 0)
+			len = len + i - 1;
+		if (s[j] == '"')
+			m = !m;
+		if (s[j] == '"' || s[j] == '\'')
+			j = j + 1 + i;
+		else
 			len++;
-		else if (s[i - 1] == '$' && c != '\'')
-		{
-			len = len + str_replace_len(token, &s[i - 1], NULL, c);
-			while ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')
-				|| (s[i] >= '0' && s[i] <= '9') || s[i] == '_')
-				i++;
-		}
+		if (s[j] == '$')
+			len = len + str_replace_len(t, &s[i - 1], NULL, '"' - 1 + m) - 1;
+		j++;
+		if (s[j - 1] == '$')
+			while ((s[j] >= 'a' && s[j] <= 'z') || (s[j] >= 'A' && s[j] <= 'Z')
+				|| (s[j] >= '0' && s[j] <= '9') || s[j] == '_')
+				j++;
 	}
 	return (len);
 }
@@ -73,7 +73,7 @@ void	str_copy_chars_token(t_token *token, char **dst, char c)
 	else if (token->str[0] == '$' && c != '\'')
 	{
 		*dst = *dst + str_replace_len(token, token->str, dst, c);
-		if(token->str[1] == '$')
+		if (token->str[1] == '$')
 			return (token_move_one_char(token));
 		while ((token->str[1] >= 'a' && token->str[1] <= 'z')
 			|| token->str[1] == '_'
@@ -110,7 +110,7 @@ char	*str_copy(t_token *token)
 
 	while (token->str[0] == ' ')
 		(token->str)++;
-	i = str_get_malloc_len(token, token->str, token->strlen, ' ');
+	i = str_get_malloc_len(token, token->str, 0, 0);
 	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
 		exit(-1); //TODO error handling

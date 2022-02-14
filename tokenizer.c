@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 04:35:11 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/10 16:25:52 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/14 20:18:43 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int	tokenizer_check_or_and(t_token *token)
 		else if (c == '\'' || c == '"')
 			while (token->str[i + 1] != c)
 				i++;
-		else if ((c == '&' || c == '|') && token->str[i + 1] == c && p_cnt == 0)
+		if (c == '\'' || c == '"')
+			i++;
+		if ((c == '&' || c == '|') && token->str[i + 1] == c && p_cnt == 0)
 			return (i + 1);
 		i++;
 	}
