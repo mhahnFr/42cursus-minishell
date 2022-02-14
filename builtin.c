@@ -19,6 +19,7 @@ int	builtin_check(t_token *token)
 		|| string_equals(arg, "export")
 		|| string_equals(arg, "unset")
 		|| string_equals(arg, "pwd")
+		|| string_equals(arg, "echo")
 		|| string_equals(arg, "exit"));
 }
 
@@ -32,9 +33,11 @@ int	builtin_exec(t_token *t)
 	else if (string_equals(arg, "pwd"))
 		t->exitstat = builtin_pwd(t->c_args);
 	else if (string_equals(arg, "export"))
-		t->exitstat = builtin_export(t->c_args, &t->envp);
+		t->exitstat = builtin_export(t);
 	else if (string_equals(arg, "exit"))
 		t->exitstat = builtin_exit(t->c_args, t);
+	else if (string_equals(arg, "echo"))
+		t->exitstat = builtin_echo(t->c_args);
 	else if (string_equals(arg, "unset"))
 		t->exitstat = builtin_unset(t->c_args, &t->envp);
 	utils_free_token(t, 0);

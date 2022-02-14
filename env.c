@@ -5,7 +5,8 @@
 
 int	builtin_env(char **argv, char **env)
 {
-	size_t		index;
+	size_t	index;
+	size_t	j;
 
 	if (argv[1] != NULL)
 	{
@@ -14,8 +15,12 @@ int	builtin_env(char **argv, char **env)
 	}
 	index = 0;
 	while (env[index] != NULL)
-	{
-		printf("%s\n", env[index]);
+	{	
+		j = 0;
+		while (env[index][j] != '=' && env[index][j] != '\0')
+			j++;
+		if (env[index][j] == '=')
+			printf("%s\n", env[index]);
 		index++;
 	}
 	return (0);
