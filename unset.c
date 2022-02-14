@@ -16,7 +16,8 @@ static bool	builtin_unset_remove(char *var, char ***env)
 	i = 0;
 	while ((*env)[i] != NULL)
 	{
-		if (string_starts_with_ec((*env)[i], var, '='))
+		if (string_starts_with_ec((*env)[i], var, '=')
+			|| string_starts_with_ec((*env)[i], var, '\0'))
 			del = (*env)[i];
 		i++;
 	}
