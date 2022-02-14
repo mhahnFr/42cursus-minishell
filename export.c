@@ -9,7 +9,7 @@
 #include "token.h"
 #include "utils.h"
 
-void	builtin_export_update_2(t_token *token, char **vars, int i)
+static void	builtin_export_update_2(t_token *token, char **vars, int i)
 {
 	char	**newenv;
 
@@ -25,7 +25,7 @@ void	builtin_export_update_2(t_token *token, char **vars, int i)
 	token->envp = newenv;
 }
 
-void	builtin_export_update(t_token *token, char **vars)
+static void	builtin_export_update(t_token *token, char **vars)
 {
 	int		i;
 	int		j;
@@ -50,14 +50,35 @@ void	builtin_export_update(t_token *token, char **vars)
 	builtin_export_update_2(token, vars, i);
 }
 
+static int	builtin_export_checker(t_token *t)
+{
+	int		status;
+	size_t	i;
+
+	status = 0;
+	i = 0;
+	while (t->c_args[i] != NULL)
+	{
+		if (utils_is_identifier(t->c_args[i]))
+			builtin_export_update(t, &t->c_args[i]);
+		else
+		{
+			ft_putstr_fd("Not a valid identifier: \"", 2);
+			ft_putstr_fd(t->c_args[i], 2);
+			ft_putendl_fd("\"", 2);
+			status = 1;
+		}
+		i++;
+	}
+	return (status);
+}
+
 int	builtin_export(t_token *t)
 {
 	size_t	i;
 	size_t	j;
 	int		mode;
-	int		status;
 
-	status = 0;
 	i = 0;
 	while (t->c_args[1] == NULL && t->envp != NULL && t->envp[i] != NULL)
 	{
@@ -75,16 +96,5 @@ int	builtin_export(t_token *t)
 		write(1, "\n", 1);
 		i++;
 	}
-	for (size_t i = 1; t->c_args[i] != NULL; i++) {
-		if (utils_is_identifier(t->c_args[i]))
-			builtin_export_update(t, &t->c_args[i]);
-		else
-		{
-			ft_putstr_fd("Not a valid identifier: \"", 2);
-			ft_putstr_fd(t->c_args[i], 2);
-			ft_putendl_fd("\"", 2);
-			status = 1;
-		}
-	}
-	return (status);
+	return (builtin_export_checker(t));
 }
