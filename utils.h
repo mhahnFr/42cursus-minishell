@@ -36,6 +36,8 @@ int		utils_free_token(t_token *token, int mode);
  */
 bool	utils_is_identifier(char *string);
 
+bool	utils_is_identifier_length(char *string, size_t length);
+
 /*
  * Compares the two given strings literally. If one of them is null, false is
  * returned, if both are null, true is returned. Otherwise, they are compared.
