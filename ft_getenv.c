@@ -1,5 +1,7 @@
 #include <stddef.h>
 
+#include "libft.h"
+
 #include "utils.h"
 
 char	*ft_getenv(const char *var, char **env)
@@ -10,7 +12,7 @@ char	*ft_getenv(const char *var, char **env)
 	while (env[i] != NULL)
 	{
 		if (string_starts_with_ec(env[i], var, '='))
-			return (env[i]);
+			return (ft_strchr(env[i], '=') + 1);
 		i++;
 	}
 	return ("");
