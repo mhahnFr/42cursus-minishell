@@ -32,12 +32,11 @@ t_heredoc	*token_get_heredocs(char *str);
  * i == 0 -> removes at the beginning
  * i != 0 -> removes at the end
  */
-void	token_remove_heredoc(t_token *token, int i);
+void		token_remove_heredoc(t_token *token, int i);
 
 /*
  * Moves pointer for one char
  */
-void	token_move_one_char(t_token *token);
-
+void		token_move_one_char(t_token *token);
 
 #endif

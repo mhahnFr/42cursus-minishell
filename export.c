@@ -86,7 +86,5 @@ int	builtin_export(t_token *t)
 			status = 1;
 		}
 	}
-	//free(t->c_args[0]);
-	//t->c_args = NULL;
 	return (status);
 }
