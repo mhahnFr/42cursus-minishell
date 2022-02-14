@@ -59,6 +59,8 @@ bool	string_starts_with(const char *self, const char *start);
  */
 char	*ft_getenv(const char *string, char **env);
 
+char	*ft_getenv_entry(const char *var, char **env);
+
 /*
  * Returns wether the given environment contains the given variable.
  */
