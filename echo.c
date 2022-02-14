@@ -7,6 +7,9 @@ int	builtin_echo(char **argv)
 	size_t	i;
 
 	i = 1;
+	if (argv != NULL && argv[1] != NULL && argv[1][0] == '-'
+		&& argv[1][0] == 'n' && argv[1][0] == '\0')
+		i++;
 	while (argv[i] != NULL)
 	{
 		printf("%s", argv[i]);
@@ -14,6 +17,8 @@ int	builtin_echo(char **argv)
 			printf(" ");
 		i++;
 	}
-	printf("\n");
+	if (!(argv != NULL && argv[1] != NULL && argv[1][0] == '-'
+		&& argv[1][0] == 'n' && argv[1][0] == '\0'))
+		printf("\n");
 	return (0);
 }
