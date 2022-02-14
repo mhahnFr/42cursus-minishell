@@ -11,7 +11,7 @@ void	file_open(t_token *token)
 	char	*filestr;
 
 	token_move_one_char(token);
-	filestr = str_copy(token, 0);
+	filestr = str_copy(token);
 	i = open(filestr, O_RDONLY);
 	if (i == -1)
 	{
@@ -29,7 +29,7 @@ void	file_write(t_token *token)
 	char	*filestr;
 
 	token_move_one_char(token);
-	filestr = str_copy(token, 0);
+	filestr = str_copy(token);
 	i = open(filestr, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (i == -1)
 	{
@@ -48,7 +48,7 @@ void	file_append(t_token *token)
 
 	token_move_one_char(token);
 	token_move_one_char(token);
-	filestr = str_copy(token, 0);
+	filestr = str_copy(token);
 	i = open(filestr, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (i == -1)
 	{

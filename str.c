@@ -3,17 +3,16 @@
 #include "token.h"
 #include "env.h"
 #include "str.h"
+#include "libft.h"
 
-int	str_replace_len(char **env, char *s, char **dst, char c)
+int	str_replace_len(t_token *token, char *s, char **dst, char c)
 {
 	int		i;
 	char	*str;
 	int		j;
 
-	if (s[0] == '*')
-		return (str_wildcard(s, dst, c));
 	if (s[0] == '$' && s[1] == '?')
-		return (str_wildcard(s, dst, c)); // TODO replace history func
+		return (str_exitstat(token, dst));
 	i = 1;
 	while ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A'
 			&& s[i] <= 'Z') || (s[i] >= '0' && s[i] <= '9') || s[i] == '_')
@@ -22,7 +21,7 @@ int	str_replace_len(char **env, char *s, char **dst, char c)
 		**dst = '$';
 	if (i == 1)
 		return (1);
-	str = get_envar(env, s, &i, c);
+	str = get_envar(token->envp, s, &i, c);
 	j = 0;
 	while (dst != NULL && j != i)
 	{
@@ -32,7 +31,7 @@ int	str_replace_len(char **env, char *s, char **dst, char c)
 	return (i);
 }
 
-int	str_get_malloc_len(char **env, char *s, int strlen, char c)
+int	str_get_malloc_len(t_token *token, char *s, int strlen, char c)
 {
 	int		len;
 	int		i;
@@ -48,11 +47,12 @@ int	str_get_malloc_len(char **env, char *s, int strlen, char c)
 			c = s[i + 1];
 		i++;
 		if ((s[i - 1] != '"' && s[i - 1] != '\'' && s[i - 1] != '$')
-			|| (s[i - 1] == '$' && c == '\''))
+			|| (s[i - 1] == '$' && c == '\'') || ((s[i - 1] == '"'
+					|| s[i - 1] == '\'') && (c == '\'' || c == '"')))
 			len++;
-		else if ((s[i - 1] == '$' || s[i - 1] == '*') && c != '\'')
+		else if (s[i - 1] == '$' && c != '\'')
 		{
-			len = len + str_replace_len(env, &s[i - 1], NULL, c);
+			len = len + str_replace_len(token, &s[i - 1], NULL, c);
 			while ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')
 				|| (s[i] >= '0' && s[i] <= '9') || s[i] == '_')
 				i++;
@@ -63,15 +63,18 @@ int	str_get_malloc_len(char **env, char *s, int strlen, char c)
 
 void	str_copy_chars_token(t_token *token, char **dst, char c)
 {
-	if ((token->str[0] != '"' && token->str[0] != '\''
-			&& token->str[0] != '$') || (token->str[0] == '$' && c == '\''))
+	if ((token->str[0] != '"' && token->str[0] != '\'' && token->str[0] != '$')
+		|| (token->str[0] == '$' && c == '\'') || ((token->str[0] == '"'
+				|| token->str[0] == '\'') && (c == '\'' || c == '"')))
 	{
 		**dst = token->str[0];
 		(*dst)++;
 	}
-	else if ((token->str[0] == '$' || token->str[0] == '*') && c != '\'')
+	else if (token->str[0] == '$' && c != '\'')
 	{
-		*dst = *dst + str_replace_len(token->envp, token->str, dst, c);
+		*dst = *dst + str_replace_len(token, token->str, dst, c);
+		if(token->str[1] == '$')
+			return (token_move_one_char(token));
 		while ((token->str[1] >= 'a' && token->str[1] <= 'z')
 			|| token->str[1] == '_'
 			|| (token->str[1] >= 'A' && token->str[1] <= 'Z')
@@ -80,52 +83,38 @@ void	str_copy_chars_token(t_token *token, char **dst, char c)
 	}
 }
 
-void	str_copy_chars(t_token *token, char *dst, int strlen, int suffixlen)
+void	str_copy_chars(t_token *token, char *dst)
 {
 	char	c;
 
 	c = ' ';
-	while (strlen != 1 && suffixlen != 0)
-	{
-		dst[strlen - 1] = token->c_args[0][strlen - 2];
-		strlen--;
-		dst[0] = '/';
-	}
 	while (((token->str[0] != ' ' && token->str[0] != '<'
 				&& token->str[0] != '>') || c == '"' || c == '\'')
-		&& 0 < token->strlen && suffixlen == 0)
+		&& 0 < token->strlen)
 	{
 		if (c != '\'' && c != '"')
-			c = token->str[0];
+			c = ' ';
 		else if (c == token->str[0])
 			c = token->str[1];
 		str_copy_chars_token(token, &dst, c);
+		if (c == ' ')
+			c = token->str[0];
 		token_move_one_char(token);
 	}
 }
 
-char	*str_copy(t_token *token, int suffixlen)
+char	*str_copy(t_token *token)
 {
 	char	*str;
 	int		i;
 
-	if (suffixlen != 0)
-	{
-		i = 0;
-		while (token->c_args[0][i] != '\0')
-			i++;
-		i = i + 1 + suffixlen;
-	}
-	else
-	{
-		while (token->str[0] == ' ')
-			(token->str)++;
-		i = str_get_malloc_len(token->envp, token->str, token->strlen, ' ');
-	}
+	while (token->str[0] == ' ')
+		(token->str)++;
+	i = str_get_malloc_len(token, token->str, token->strlen, ' ');
 	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
 		exit(-1); //TODO error handling
 	str[i] = '\0';
-	str_copy_chars(token, &str[suffixlen], i - suffixlen, suffixlen);
+	str_copy_chars(token, str);
 	return (str);
 }

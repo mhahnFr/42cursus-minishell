@@ -10,8 +10,10 @@
  * suffixlen should be 0 if not nedded
  * return str with malloced copy ; if nothing there to copy retrun is null
  */
-char	*str_copy(t_token *token, int suffixlen);
+char	*str_copy(t_token *token);
 
 int		str_wildcard(char *s, char **dst, char c);
+
+int		str_exitstat(t_token *token, char **dst);
 
 #endif
