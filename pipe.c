@@ -14,6 +14,8 @@ int	pipe_skip_qtm_and_move(char *str)
 	if (str[0] == '"' || str[0] == '\'')
 		while (str[i] != str[0])
 			i++;
+	if (str[i] == '"' || str[i] == '\'')
+		i++;
 	return (i);
 }
 
