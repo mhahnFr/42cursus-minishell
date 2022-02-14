@@ -50,6 +50,17 @@ bool	string_equals(const char *self, const char *other);
  */
 bool	string_starts_with(const char *self, const char *start);
 
+/*
+ * Returns the value of the given variable stored in the environment. If the
+ * given variable is not found in the environment, an empty string is returned.
+ */
+char	*ft_getenv(const char *string, char **env);
+
+/*
+ * Returns wether the given environment contains the given variable.
+ */
+bool	ft_hasenvvar(const char *var, char **env);
+
 bool	string_starts_with_ec(
 			const char *self, const char *start, const char end);
 

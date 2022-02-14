@@ -20,6 +20,7 @@ int	builtin_check(t_token *token)
 		|| string_equals(arg, "unset")
 		|| string_equals(arg, "pwd")
 		|| string_equals(arg, "echo")
+		|| string_equals(arg, "cd")
 		|| string_equals(arg, "exit"));
 }
 
@@ -40,6 +41,8 @@ int	builtin_exec(t_token *t)
 		t->exitstat = builtin_echo(t->c_args);
 	else if (string_equals(arg, "unset"))
 		t->exitstat = builtin_unset(t->c_args, &t->envp);
+	else if (string_equals(arg, "cd"))
+		t->exitstat = builtin_cd(t->c_args, t->envp);
 	utils_free_token(t, 0);
 	return (t->exitstat);
 }
