@@ -14,12 +14,24 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <unistd.h>
 
 #include "libft.h"
 
 #include "signals.h"
 #include "token.h"
-#include "unistd.h"
+#include "utils.h"
+
+void	token_create(t_token *self)
+{
+	if (self == NULL)
+		return ;
+	self->c_args = NULL;
+	self->envp = copy_env();
+	self->exitstat = 0;
+	self->fdin = -1;
+	self->fdout = -1;
+}
 
 int	token_check_eof(char *line, char *str)
 {
@@ -55,7 +67,7 @@ t_heredoc	*token_get_heredocs(char *str)
 		return (NULL);
 	heredoc = malloc(sizeof(t_heredoc));
 	if (heredoc == NULL || pipe(pint) == -1)
-		exit(-1); // TODO FREE TOKEN
+		exit(-1);
 	signals_default();
 	line = readline(">" " ");
 	heredoc->fd = pint[0];
