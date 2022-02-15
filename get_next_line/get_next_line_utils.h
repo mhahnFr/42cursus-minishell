@@ -1,8 +1,20 @@
-#ifndef GET_NEXT_LINE_UTILS_H
-#define GET_NEXT_LINE_UTILS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.h                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/15 20:04:02 by mhahn             #+#    #+#             */
+/*   Updated: 2022/02/15 20:04:16 by mhahn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdbool.h>
+#ifndef GET_NEXT_LINE_UTILS_H
+# define GET_NEXT_LINE_UTILS_H
+
+# include <stdlib.h>
+# include <stdbool.h>
 
 /*
  * A string builder part. It includes the actual string part of the size of
@@ -13,25 +25,10 @@
  * to the next part.
  */
 typedef struct s_string_builder {
-	/*
-	 * A pointer to the newline character in the part, or null if no newline
-	 * character is present.
-	 */
 	char					*new_line;
-
-	/* The file descriptor that was used to read this part. */
 	size_t					start_offset;
-
-	/* The offset at which to start using the string part. */
 	size_t					string_length;
-
-	/*
-	 * The length of the string part. It is less than the buffer size, if these
-	 * are the last characters in the file.
-	 */
 	struct s_string_builder	*next;
-
-	/* The string which makes part of the builder. */
 	char					part[];
 }	t_string_builder;
 
