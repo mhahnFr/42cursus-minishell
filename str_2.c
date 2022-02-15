@@ -31,7 +31,7 @@ int	str_exitstat(t_token *token, char **dst)
 		n = n / 10;
 	}
 	if (dst == NULL)
-		return (temp - 1);
+		return (temp);
 	token_move_one_char(token);
 	return (temp);
 }

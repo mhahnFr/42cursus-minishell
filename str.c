@@ -52,7 +52,7 @@ int	str_get_malloc_len(t_token *t, char *s, int m, int len)
 		else if (!(j != 0 && s[j] == '?' && s[j - 1] == '$'))
 			len++;
 		if (s[j] == '$')
-			len = len + str_replace_len(t, &s[i - 1], NULL, '"' - 1 + m) - 1;
+			len = len + str_replace_len(t, &s[i], NULL, '"' - 1 + m) - 1;
 		j++;
 		if (s[j - 1] == '$')
 			while ((s[j] >= 'a' && s[j] <= 'z') || (s[j] >= 'A' && s[j] <= 'Z')
