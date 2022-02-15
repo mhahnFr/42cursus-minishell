@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:08 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:29 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 21:43:56 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ char	*get_envar(char **env, char *str, int *slen, char mode)
 			while ((*env)[j + 1 + *slen] != '\0')
 				(*slen)++;
 			if (mode != '"')
-				while ((*env)[j + *slen] == ' ' && (*env)[j + *slen - 1] == ' ')
+				while ((*env)[j + *slen] == ' ' && (*env)[j + *slen - 1] == ' '
+					&& *slen > 1)
 					(*slen)--;
 			return (&env[0][j + 1]);
 		}
