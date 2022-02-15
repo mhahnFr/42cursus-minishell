@@ -1,3 +1,4 @@
+#include <dirent.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -67,12 +68,20 @@ bool	exec_run(t_token *token, char *env)
 	char	*cmdstr;
 	int		stat;
 
+	cmdstr = NULL;
 	stat = 0;
 	while (token->c_args[0][stat] == '.')
 		stat++;
+	if (opendir(token->c_args[0]) != NULL && token->c_args[0][stat] == '/')
+	{
+		ft_putstr_fd(NAME ": is a directory: ", 2);
+		ft_putendl_fd(token->c_args[0], 2);
+		token->exitstat = 126;
+		return (utils_free_token(token, 1));
+	}
 	if (token->c_args[0][stat] == '/' && 0 == access(token->c_args[0], X_OK))
 		cmdstr = ft_strdup(token->c_args[0]);
-	else
+	else if (token->c_args[0][stat] != '/' && token->c_args[0][0] != '.')
 		cmdstr = exec_get_path(token, env);
 	if (cmdstr == NULL)
 	{
