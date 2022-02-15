@@ -6,10 +6,6 @@ typedef struct s_heredoc {
 	struct s_heredoc	*next;
 }				t_heredoc;
 
-/*
- * Represents a token. Consists of a pointer to the next and the previous
- * token, the type and the optional content.
- */
 typedef struct s_token {
 	char			*str;
 	int				strlen;
