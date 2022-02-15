@@ -67,18 +67,23 @@ bool	exec_run(t_token *token, char *env)
 {
 	char	*cmdstr;
 	int		stat;
+	void	*dir;
 
 	cmdstr = NULL;
 	stat = 0;
 	while (token->c_args[0][stat] == '.')
 		stat++;
-	if (opendir(token->c_args[0]) != NULL && token->c_args[0][stat] == '/')
+	dir = opendir(token->c_args[0]);
+	if (dir != NULL && token->c_args[0][stat] == '/')
 	{
 		ft_putstr_fd(NAME ": is a directory: ", 2);
 		ft_putendl_fd(token->c_args[0], 2);
 		token->exitstat = 126;
+		free(dir);
 		return (utils_free_token(token, 1));
 	}
+	if (dir != NULL)
+		free(dir);
 	if (token->c_args[0][stat] == '/' && 0 == access(token->c_args[0], X_OK))
 		cmdstr = ft_strdup(token->c_args[0]);
 	else if (token->c_args[0][stat] != '/' && token->c_args[0][0] != '.')
