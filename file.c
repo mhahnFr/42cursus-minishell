@@ -6,13 +6,14 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:36 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 21:33:54 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/16 00:02:24 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include "str.h"
 #include "token.h"
@@ -30,6 +31,7 @@ void	file_open(t_token *token)
 	i = open(filestr, O_RDONLY);
 	if (i == -1)
 	{
+		perror(filestr);
 		free(filestr);
 		exit(1);
 	}
@@ -50,6 +52,7 @@ void	file_write(t_token *token)
 	i = open(filestr, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (i == -1)
 	{
+		perror(filestr);
 		free(filestr);
 		exit(1);
 	}
@@ -71,6 +74,7 @@ void	file_append(t_token *token)
 	i = open(filestr, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (i == -1)
 	{
+		perror(filestr);
 		free(filestr);
 		exit(1);
 	}
