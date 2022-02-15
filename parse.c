@@ -52,6 +52,6 @@ int	parse_func(t_token *token)
 	if (token->c_args != NULL && builtin_check(token))
 		return (builtin_exec(token));
 	if (token->c_args != NULL)
-		return (exec_run(token, getenv("PATH")));
+		return (exec_run(token, ft_getenv("PATH", token->envp)));
 	return (1);
 }
