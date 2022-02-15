@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:17 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:24 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:16:00 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,28 @@ pid_t	exec_fork(t_token *token, char	*cmdstr, pid_t child)
 	exit(-1);
 }
 
+bool	exec_run_2(t_token *token, char *env, int stat, char *cmdstr)
+{
+	if (token->c_args[0][stat] == '/' && 0 == access(token->c_args[0], X_OK))
+		cmdstr = ft_strdup(token->c_args[0]);
+	else if (token->c_args[0][stat] != '/' && token->c_args[0][0] != '.')
+		cmdstr = exec_get_path(token, env);
+	if (cmdstr == NULL)
+	{
+		ft_putstr_fd(NAME ": command not found: ", 2);
+		ft_putendl_fd(token->c_args[0], 2);
+		token->exitstat = 127;
+		return (utils_free_token(token, 1));
+	}
+	waitpid(exec_fork(token, cmdstr, fork()), &stat, 0);
+	utils_free_token(token, 0);
+	if (WIFEXITED(stat))
+		token->exitstat = WEXITSTATUS(stat);
+	else
+		token->exitstat = -1;
+	return (tokenizer_func(token));
+}
+
 bool	exec_run(t_token *token, char *env)
 {
 	char	*cmdstr;
@@ -96,22 +118,5 @@ bool	exec_run(t_token *token, char *env)
 	}
 	if (dir != NULL)
 		free(dir);
-	if (token->c_args[0][stat] == '/' && 0 == access(token->c_args[0], X_OK))
-		cmdstr = ft_strdup(token->c_args[0]);
-	else if (token->c_args[0][stat] != '/' && token->c_args[0][0] != '.')
-		cmdstr = exec_get_path(token, env);
-	if (cmdstr == NULL)
-	{
-		ft_putstr_fd(NAME ": command not found: ", 2);
-		ft_putendl_fd(token->c_args[0], 2);
-		token->exitstat = 127;
-		return (utils_free_token(token, 1));
-	}
-	waitpid(exec_fork(token, cmdstr, fork()), &stat, 0);
-	utils_free_token(token, 0);
-	if (WIFEXITED(stat))
-		token->exitstat = WEXITSTATUS(stat);
-	else
-		token->exitstat = -1;
-	return (tokenizer_func(token));
+	return (exec_run_2(token, env, stat, cmdstr));
 }

@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 17:37:35 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/12 18:13:23 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:16:36 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_heredoc	*token_get_heredocs(char *str)
 		return (NULL);
 	heredoc = malloc(sizeof(t_heredoc));
 	if (heredoc == NULL || pipe(pint) == -1)
-		exit(-1); // TODO FREE TOKEN
+		exit(1);
 	signals_default();
 	line = readline(">" " ");
 	heredoc->fd = pint[0];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:36 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:15 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:07:36 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	file_open(t_token *token)
 	if (i == -1)
 	{
 		free(filestr);
-		exit(-1); // TODO erro managment
+		exit(1);
 	}
 	if (token->fdin != -1)
 		close(token->fdin);
@@ -46,7 +46,7 @@ void	file_write(t_token *token)
 	if (i == -1)
 	{
 		free(filestr);
-		exit(-1); // TODO erro managment
+		exit(1);
 	}
 	if (token->fdout != -1)
 		close(token->fdout);
@@ -65,7 +65,7 @@ void	file_append(t_token *token)
 	if (i == -1)
 	{
 		free(filestr);
-		exit(-1); // TODO erro managment
+		exit(1);
 	}
 	if (token->fdout != -1)
 		close(token->fdout);

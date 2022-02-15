@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:02:11 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:02:56 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:23:20 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
  * return str with malloced copy ; if nothing there to copy return is null
  */
 char	*str_copy(t_token *token);
+
+void	str_move_j(int *j, char *s);
 
 int		str_wildcard(char *s, char **dst, char c);
 

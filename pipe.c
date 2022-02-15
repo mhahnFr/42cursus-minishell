@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:01:03 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:06 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:14:50 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ pid_t	pipe_childs(int childno, t_token *token, int len, int pipe_fds[2])
 	if (child != 0)
 		return (child);
 	pipe_split_heredoc(token, childno, len);
-	if (childno == 0 ) //&& 0 == child
+	if (childno == 0 && 0 == child)
 	{
 		token->strlen = len - 1;
 		token->str[token->strlen] = '\0';

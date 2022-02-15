@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 04:35:11 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/14 20:18:43 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:16:55 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	tokenizer_apply_parenthesis(t_token *token)
 
 	child = fork();
 	if (child < 0)
-		return (-1); // TODO FREE TOKEN
+		return (1);
 	if (0 == child)
 	{
 		while (token->str[token->strlen] != ')')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:02:09 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:02:57 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:23:04 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	str_get_malloc_len(t_token *t, char *s, int m, int len)
 	int		j;
 
 	j = 0;
-	while (((s[j] != ' ' && s[j] != '<' && s[j] != '>') || m == 1) && j < t->strlen)
+	while (((s[j] != ' ' && s[j] != '<' && s[j] != '>') || m == 1)
+		&& j < t->strlen)
 	{
 		i = 0;
 		while (m == 0 && s[j] == '\'' && (s[j + i] != '\'' || i == 0))
@@ -65,11 +66,7 @@ int	str_get_malloc_len(t_token *t, char *s, int m, int len)
 			len++;
 		if (s[j] == '$')
 			len = len + str_replace_len(t, &s[i], NULL, '"' - 1 + m) - 1;
-		j++;
-		if (s[j - 1] == '$')
-			while ((s[j] >= 'a' && s[j] <= 'z') || (s[j] >= 'A' && s[j] <= 'Z')
-				|| (s[j] >= '0' && s[j] <= '9') || s[j] == '_')
-				j++;
+		str_move_j(&j, s);
 	}
 	return (len);
 }
@@ -130,7 +127,7 @@ char	*str_copy(t_token *token)
 	i = str_get_malloc_len(token, token->str, 0, 0);
 	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
-		exit(-1); //TODO error handling
+		exit(1);
 	str[i] = '\0';
 	str_copy_chars(token, str);
 	return (str);

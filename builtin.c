@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 19:59:38 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:39 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:12:51 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ bool	builtin_check(t_token *token)
 		|| string_equals(arg, "exit"));
 }
 
-int	builtin_exec(t_token *t)
+void	builtin_close_fds(t_token *t)
 {
-	const char	*arg;
-
 	if (t->fdout != -1)
 	{
 		dup2(t->fdout, 1);
@@ -50,6 +48,13 @@ int	builtin_exec(t_token *t)
 		dup2(t->fdin, 0);
 		close(t->fdin);
 	}
+}
+
+int	builtin_exec(t_token *t)
+{
+	const char	*arg;
+
+	builtin_close_fds(t);
 	arg = t->c_args[0];
 	if (string_equals(arg, "env"))
 		t->exitstat = builtin_env(t->c_args, t->envp);

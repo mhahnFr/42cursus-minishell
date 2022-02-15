@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:02:06 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:02:58 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:23:09 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ int	str_wildcard(char *s, char **dst, char c)
 	(void) dst;
 	(void) c;
 	return (0);
+}
+
+void	str_move_j(int *j, char *s)
+{
+	(*j)++;
+	if (s[(*j) - 1] == '$')
+		while ((s[(*j)] >= 'a' && s[(*j)] <= 'z') || (s[(*j)] >= 'A'
+				&& s[(*j)] <= 'Z')
+			|| (s[(*j)] >= '0' && s[(*j)] <= '9') || s[(*j)] == '_')
+			(*j)++;
 }
 
 int	str_exitstat(t_token *token, char **dst)
