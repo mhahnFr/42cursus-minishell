@@ -87,19 +87,23 @@ void	str_copy_chars_token(t_token *token, char **dst, char c)
 void	str_copy_chars(t_token *token, char *dst)
 {
 	char	c;
+	int		i;
 
+	i = 0;
 	c = ' ';
 	while (((token->str[0] != ' ' && token->str[0] != '<'
 				&& token->str[0] != '>') || c == '"' || c == '\'')
 		&& 0 < token->strlen)
 	{
 		if (c != '\'' && c != '"')
-			c = ' ';
+			i = 1;
 		else if (c == token->str[0])
 			c = token->str[1];
 		str_copy_chars_token(token, &dst, c);
-		if (c == ' ')
+		if (i == 1)
 			c = token->str[0];
+		if (i == 1)
+			i = !i;
 		token_move_one_char(token);
 	}
 }
