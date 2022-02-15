@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:43 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:12 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 21:08:42 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	main(void)
 	token_create(&token);
 	while (true)
 	{
+		token.fdin = -1;
+		token.fdout = -1;
 		signals_default();
 		line = main_readline();
 		if (line == NULL)
