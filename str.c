@@ -49,7 +49,7 @@ int	str_get_malloc_len(t_token *t, char *s, int m, int len)
 			m = !m;
 		if (s[j] == '"' || s[j] == '\'')
 			j = j + 1 + i;
-		else
+		else if (!(j != 0 && s[j] == '?' && s[j - 1] == '$'))
 			len++;
 		if (s[j] == '$')
 			len = len + str_replace_len(t, &s[i - 1], NULL, '"' - 1 + m) - 1;
