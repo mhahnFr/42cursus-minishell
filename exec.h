@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:19 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:23 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:34:38 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-
-# include <stdbool.h>
 
 # include "token.h"
 
@@ -23,6 +21,6 @@
  *  Returns the status of the execution, which is stored additionally in the
  *  given token.
  */
-bool	exec_run(t_token *token, char *env);
+int	exec_run(t_token *token, char *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:17 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:16:00 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:34:25 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ pid_t	exec_fork(t_token *token, char	*cmdstr, pid_t child)
 	exit(-1);
 }
 
-bool	exec_run_2(t_token *token, char *env, int stat, char *cmdstr)
+int	exec_run_2(t_token *token, char *env, int stat, char *cmdstr)
 {
 	if (token->c_args[0][stat] == '/' && 0 == access(token->c_args[0], X_OK))
 		cmdstr = ft_strdup(token->c_args[0]);
@@ -97,7 +97,7 @@ bool	exec_run_2(t_token *token, char *env, int stat, char *cmdstr)
 	return (tokenizer_func(token));
 }
 
-bool	exec_run(t_token *token, char *env)
+int	exec_run(t_token *token, char *env)
 {
 	char	*cmdstr;
 	int		stat;
