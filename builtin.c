@@ -6,13 +6,14 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 19:59:38 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 21:21:32 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/15 22:40:52 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 #include "cd.h"
+#include "tokenizer.h"
 #include "echo.h"
 #include "env.h"
 #include "exit.h"
@@ -92,5 +93,5 @@ int	builtin_exec(t_token *t)
 		t->exitstat = builtin_cd(t->c_args, t->envp);
 	utils_free_token(t, 0);
 	builtin_replace_fds(i, j);
-	return (t->exitstat);
+	return (tokenizer_func(t));
 }
