@@ -62,7 +62,7 @@ void	file_append(t_token *token)
 
 void	file_heredoc(t_token *token)
 {
-	t_heredoc *tmp;
+	t_heredoc	*tmp;
 
 	token_move_one_char(token);
 	token_move_one_char(token);

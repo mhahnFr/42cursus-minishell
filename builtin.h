@@ -16,6 +16,6 @@ bool	builtin_check(t_token *token);
  * of the builtin that was executed. The exit status is stored additionally in
  * the given token.
  */
-int	builtin_exec(t_token *token);
+int		builtin_exec(t_token *token);
 
 #endif

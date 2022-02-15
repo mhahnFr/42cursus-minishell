@@ -118,7 +118,6 @@ int	main(void)
 			add_history(line);
 			if (syntax_check(line) == 0)
 			{
-				
 				token.strlen = ft_strlen(line);
 				token.str = line;
 				token.lptr = token.str;
