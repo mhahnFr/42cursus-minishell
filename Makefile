@@ -55,7 +55,7 @@ run: $(NAME)
 
 # Runs the tester.
 test: $(NAME)
-	cd $(T_F) && ./tester.sh a
+	cd $(T_F) && ./tester.sh m
 
 # Calls the makefile of the libft.
 $(LFT_D):
