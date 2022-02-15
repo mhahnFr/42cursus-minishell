@@ -42,6 +42,25 @@ static char	*main_readline(void)
 	return (line);
 }
 
+static void	main2(char *line, t_token *token)
+{
+	if (!utils_only_whitespace(line))
+	{
+		add_history(line);
+		if (syntax_check(line) == 0)
+		{
+			token->strlen = ft_strlen(line);
+			token->str = line;
+			token->lptr = token->str;
+			token->heredoc = token_get_heredocs(token->str);
+			signals_execution();
+			tokenizer_func(token);
+		}
+		else
+			token->exitstat = 2;
+	}
+}
+
 int	main(void)
 {
 	t_token	token;
@@ -60,21 +79,7 @@ int	main(void)
 			if (isatty(0))
 				printf("exit\n");
 		}
-		if (!utils_only_whitespace(line))
-		{
-			add_history(line);
-			if (syntax_check(line) == 0)
-			{
-				token.strlen = ft_strlen(line);
-				token.str = line;
-				token.lptr = token.str;
-				token.heredoc = token_get_heredocs(token.str);
-				signals_execution();
-				tokenizer_func(&token);
-			}
-			else
-				token.exitstat = 2;
-		}
+		main2(line, &token);
 	}
 	return (0);
 }
