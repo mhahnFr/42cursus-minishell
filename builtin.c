@@ -28,6 +28,16 @@ int	builtin_exec(t_token *t)
 {
 	const char	*arg;
 
+	if (t->fdout != -1)
+	{
+		dup2(t->fdout, 1);
+		close(t->fdout);
+	}
+	if (t->fdin != -1)
+	{
+		dup2(t->fdin, 0);
+		close(t->fdin);
+	}
 	arg = t->c_args[0];
 	if (string_equals(arg, "env"))
 		t->exitstat = builtin_env(t->c_args, t->envp);
