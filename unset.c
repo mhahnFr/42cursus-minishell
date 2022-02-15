@@ -5,6 +5,10 @@
 #include "unset.h"
 #include "utils.h"
 
+/*
+ * Removes the given variable from the given environment. Allocates a new
+ * environment.
+ */
 static bool	builtin_unset_remove(char *var, char ***env)
 {
 	char	**new_env;

@@ -10,7 +10,7 @@
 #include "unset.h"
 #include "utils.h"
 
-int	builtin_check(t_token *token)
+bool	builtin_check(t_token *token)
 {
 	const char	*arg;
 

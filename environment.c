@@ -22,7 +22,10 @@ char	**copy_env(void)
 
 	ret = malloc((get_env_size((const char **) environ) + 1) * sizeof(char *));
 	if (ret == NULL)
-		return (NULL); // TODO Error handling
+	{
+		ft_putendl_fd("Malloc failed while copying the environment!", 2);
+		return (NULL);
+	}
 	index = 0;
 	while (environ[index] != NULL)
 	{

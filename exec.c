@@ -1,14 +1,14 @@
-#include <unistd.h>
-#include <sys/wait.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-#include "minishell.h"
-#include "token.h"
-#include "str.h"
-#include "utils.h"
 #include "libft.h"
+#include "minishell.h"
+#include "str.h"
+#include "token.h"
 #include "tokenizer.h"
+#include "utils.h"
 
 char	*exec_get_path(t_token *token, char *e)
 {

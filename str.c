@@ -1,9 +1,10 @@
 #include <stdlib.h>
 
-#include "token.h"
+#include "libft.h"
+
 #include "env.h"
 #include "str.h"
-#include "libft.h"
+#include "token.h"
 
 int	str_replace_len(t_token *token, char *s, char **dst, char c)
 {

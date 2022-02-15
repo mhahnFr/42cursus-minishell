@@ -11,14 +11,15 @@
 /* ************************************************************************** */
 
 #include <stddef.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-#include "tokenizer.h"
-#include "pipe.h"
-#include "parse.h"
 #include "libft.h"
+
+#include "parse.h"
+#include "pipe.h"
+#include "tokenizer.h"
 #include "utils.h"
 
 int	tokenizer_check_or_and(t_token *token)

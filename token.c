@@ -15,9 +15,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#include "token.h"
 #include "libft.h"
+
 #include "signals.h"
+#include "token.h"
 #include "unistd.h"
 
 int	token_check_eof(char *line, char *str)

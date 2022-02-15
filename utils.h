@@ -25,17 +25,22 @@ void	utils_free_char_array(char **array);
 
 /*
  * Frees token. Everything there has to be allocated with
- * malloc to avoid freeing unallocated memmory.
+ * malloc to avoid freeing unallocated memory.
  */
 int		utils_free_token(t_token *token, int mode);
 
 /*
- * Returns wether the given string represents a valid indentifier. That is, it
- * only contains alphanumeric characters and does not start with a digit. If no
- * string is given, false is returned.
+ * Returns wether the given string represents a valid identifier. That is, it
+ * only contains alphanumeric characters or underscores and does not start with
+ * a digit. If no string is given, false is returned.
  */
 bool	utils_is_identifier(char *string);
 
+/*
+ * Returns wether the given string represents a valid identifier for the given
+ * length. That is, it only contains alphanumeric characters or underscores and
+ * does not start with a digit. If no string is given, false is returned.
+ */
 bool	utils_is_identifier_length(char *string, size_t length);
 
 /*
@@ -59,6 +64,10 @@ bool	string_starts_with(const char *self, const char *start);
  */
 char	*ft_getenv(const char *string, char **env);
 
+/*
+ * Returns the corresponding entry in the given environment of the given
+ * variable. If no entry is found for the given variable, null is returned.
+ */
 char	*ft_getenv_entry(const char *var, char **env);
 
 /*
@@ -66,6 +75,12 @@ char	*ft_getenv_entry(const char *var, char **env);
  */
 bool	ft_hasenvvar(const char *var, char **env);
 
+/*
+ * Returns wether the given string starts with the other given string. If one
+ * of them is null, false is returned. Otherwise, they are compared. The given
+ * string has to have the given character after the length of the beginning
+ * string.
+ */
 bool	string_starts_with_ec(
 			const char *self, const char *start, const char end);
 

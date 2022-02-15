@@ -1,12 +1,12 @@
 #include <stdlib.h>
 
-#include "token.h"
-#include "str.h"
-#include "libft.h"
-#include "utils.h"
+#include "builtin.h"
 #include "exec.h"
 #include "file.h"
-#include "builtin.h"
+#include "libft.h"
+#include "str.h"
+#include "token.h"
+#include "utils.h"
 
 void	parse_c_arg(t_token *token)
 {

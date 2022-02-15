@@ -15,6 +15,9 @@
 #include "tokenizer.h"
 #include "utils.h"
 
+/*
+ * Prints the copyright notice. If a real tty is used, colours are used.
+ */
 static void	print_header_part3(void)
 {
 	if (isatty(1))
@@ -25,6 +28,9 @@ static void	print_header_part3(void)
 			"mhahnFr (github.com/mhahnFr).\n\n", 73);
 }
 
+/*
+ * Prints the downer half of the 42 ASCII art.
+ */
 static void	print_header_part2(void)
 {
 	write(1, "#####################   ######       /###       "
@@ -50,6 +56,9 @@ static void	print_header_part2(void)
 	print_header_part3();
 }
 
+/*
+ * Prints the top half of the 42 ASCII art.
+ */
 static void	print_header(void)
 {
 	write(1, "\n                /####/  #################       "
@@ -121,7 +130,5 @@ int	main(void)
 				token.exitstat = 2;
 		}
 	}
-	utils_free_token(&token, 2);
-	signals_reset_echoctl();
 	return (0);
 }

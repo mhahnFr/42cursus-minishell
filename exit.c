@@ -5,6 +5,10 @@
 #include "exit.h"
 #include "utils.h"
 
+/*
+ * Returns wether the given string contains only digits. It may be preceeded by
+ * a plus or minus sign.
+ */
 static bool	ft_isnum(char *string)
 {
 	size_t	i;

@@ -9,47 +9,12 @@
 #include "token.h"
 #include "utils.h"
 
-/*static void	builtin_export_update_2(t_token *token, char **vars, int i)
-{
-	char	**newenv;
-
-	newenv = malloc(sizeof(char **) * (i + 2));
-	newenv[i + 1] = NULL;
-	newenv[i] = vars[0];
-	while (i != 0)
-	{
-		i--;
-		newenv[i] = token->envp[i];
-	}
-	free(token->envp);
-	token->envp = newenv;
-}*/
-
-/*static void	builtin_export_update(t_token *token, char **vars)
-{
-	int		i;
-	int		j;
-
-	if (vars == NULL || vars[0] == NULL)
-		return ;
-	i = 0;
-	while (token->envp != NULL && token->envp[i] != NULL)
-	{
-		j = 0;
-		while (token->envp[i][j] == vars[0][j] && vars[0][j] != '\0'
-			&& vars[0][j] != '=')
-			j++;
-		if ((token->envp[i][j] == '=' || token->envp[i][j] == '\0') && j != 0)
-		{
-			free(token->envp[i]);
-			token->envp[i] = vars[0];
-			return (builtin_export_update(token, &vars[1]));
-		}
-		i++;
-	}
-	builtin_export_update_2(token, vars, i);
-}*/
-
+/*
+ * Adds the given variable to the environment. The given variable will be
+ * appended, resulting in a newly allocated environment, using the given
+ * length. The pointer in the token points to the new environment after
+ * invocation.
+ */
 static void	builtin_export_update_2(t_token *token, char *var, size_t length)
 {
 	size_t	i;
@@ -70,6 +35,12 @@ static void	builtin_export_update_2(t_token *token, char *var, size_t length)
 	token->envp = new_env;
 }
 
+/*
+ * Compares the two given strings until either a character that is not the
+ * same is encountered. If one of them reaches the end and the other does not,
+ * the other has to end with the given character. If only one of the two
+ * strings is null, false is returned.
+ */
 static bool	string_compare_until(char *self, char *other, char end)
 {
 	size_t	i;
@@ -94,6 +65,10 @@ static bool	string_compare_until(char *self, char *other, char end)
 	return (false);
 }
 
+/*
+ * Replaces a variable that already exists in the environment. If that is not
+ * the case, the variable will be appended.
+ */
 static void	builtin_export_update(t_token *token, char *var)
 {
 	size_t	i;
@@ -112,6 +87,11 @@ static void	builtin_export_update(t_token *token, char *var)
 	builtin_export_update_2(token, var, i);
 }
 
+/*
+ * Checks each argument if it is a valid identifier. If that is the case, the
+ * argument is treated as a variable and appended or inserted to the
+ * environment. If an argument is not a valid identifier, 1 is returned.
+ */
 static int	builtin_export_checker(t_token *t)
 {
 	int		status;

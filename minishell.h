@@ -7,7 +7,7 @@
 # define PROMPT "42 HN %"
 
 /*
- * The name to be used with messages.
+ * The name to be used in messages.
  */
 # define NAME "msh"
 

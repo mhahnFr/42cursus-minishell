@@ -19,7 +19,7 @@ typedef struct s_token {
 }				t_token;
 
 /*
- * Fills heredoc list
+ * Fills heredoc list.
  */
 t_heredoc	*token_get_heredocs(char *str);
 
@@ -31,7 +31,7 @@ t_heredoc	*token_get_heredocs(char *str);
 void		token_remove_heredoc(t_token *token, int i);
 
 /*
- * Moves pointer for one char
+ * Moves the pointer in the given token by one character.
  */
 void		token_move_one_char(t_token *token);
 
