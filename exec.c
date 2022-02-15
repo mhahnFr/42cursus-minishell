@@ -35,7 +35,7 @@ char	*exec_get_path(t_token *token, char *e)
 	return (exec_get_path(token, &e[i]));
 }
 
-pid_t	exec_fork(t_token *token, char	*cmdstr, pid_t	child)
+pid_t	exec_fork(t_token *token, char	*cmdstr, pid_t child)
 {
 	if (0 == child)
 	{
