@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:02:09 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:23:04 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/15 22:27:06 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	str_get_malloc_len(t_token *t, char *s, int m, int len)
 		else if (!(j != 0 && s[j] == '?' && s[j - 1] == '$'))
 			len++;
 		if (s[j] == '$')
-			len = len + str_replace_len(t, &s[i], NULL, '"' - 1 + m) - 1;
+			len = len + str_replace_len(t, &s[j], NULL, '"' - 1 + m) - 1;
 		str_move_j(&j, s);
 	}
 	return (len);
