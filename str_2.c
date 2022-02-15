@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:02:06 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:23:09 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/15 23:56:28 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	str_exitstat(t_token *token, char **dst)
 		n = n / 10;
 		len++;
 	}
+	n = token->exitstat;
 	temp = len;
 	while (len != 0 && dst != NULL)
 	{
