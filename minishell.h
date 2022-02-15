@@ -23,4 +23,9 @@
  */
 # define NAME "msh"
 
+/*
+ * Prints the top half of the 42 ASCII art.
+ */
+void	print_header(void);
+
 #endif

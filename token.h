@@ -47,4 +47,6 @@ void		token_remove_heredoc(t_token *token, int i);
  */
 void		token_move_one_char(t_token *token);
 
+void		token_create(t_token *self);
+
 #endif

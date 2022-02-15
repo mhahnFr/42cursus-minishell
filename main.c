@@ -27,73 +27,19 @@
 #include "tokenizer.h"
 #include "utils.h"
 
-/*
- * Prints the copyright notice. If a real tty is used, colours are used.
- */
-static void	print_header_part3(void)
+static char	*main_readline(void)
 {
-	if (isatty(1))
-		write(1, "\nMade by \033[1;31mnimichi\033[1;0m (github.com/nimichi) and "
-			"\033[1;32mmhahnFr\033[1;0m (github.com/mhahnFr).\n\n", 99);
+	char	*line;
+
+	if (isatty(0))
+		line = readline(PROMPT " ");
 	else
-		write(1, "\nMade by nimichi (github.com/nimichi) and "
-			"mhahnFr (github.com/mhahnFr).\n\n", 73);
-}
-
-/*
- * Prints the downer half of the 42 ASCII art.
- */
-static void	print_header_part2(void)
-{
-	write(1, "#####################   ######       /###       "
-		"                               \n", 80);
-	write(1, "#####################   ######     /#####       "
-		"                               \n", 80);
-	write(1, "               ######   #################       "
-		"                               \n", 80);
-	write(1, "               ######                           "
-		"                               \n", 80);
-	write(1, "               ######                           "
-		"                               \n", 80);
-	write(1, "               ######   #                       "
-		"                               \n", 80);
-	write(1, "   _                    #  #  #  #==  #  #    #="
-		"=\\   #==,  *==*  #\\\\  #  #\\\\  #\n", 80);
-	write(1, "  |c| mhahnFr           #  #==#  #=   #  #    #="
-		"=<   #=*   #  #  # \\\\ #  # \\\\ #\n", 80);
-	write(1, "  '-'                   #  #  #  #==  #  #==  #="
-		"=/   # \\\\  *==*  #  \\\\#  #  \\\\#\n", 80);
-	write(1, "                        #                       "
-		"                               \n", 80);
-	print_header_part3();
-}
-
-/*
- * Prints the top half of the 42 ASCII art.
- */
-static void	print_header(void)
-{
-	write(1, "\n                /####/  #################       "
-		"                               \n", 81);
-	write(1, "              /####/    #####/     ######       "
-		"                               \n", 80);
-	write(1, "            /####/      ###/       ######       "
-		"                               \n", 80);
-	write(1, "          /####/        #/         /####/       "
-		"                               \n", 80);
-	write(1, "        /####/          /        /####/         "
-		"                               \n", 80);
-	write(1, "      /####/                   /####/           "
-		"                               \n", 80);
-	write(1, "    /####/                   /####/             "
-		"                               \n", 80);
-	write(1, "  /####/                   /####/               "
-		"                               \n", 80);
-	write(1, "/####/                   /####/         /       "
-		"                               \n", 80);
-	write(1, "#####################   ######         /#       "
-		"                               \n", 80);
-	print_header_part2();
+	{
+		line = get_next_line(0);
+		if (line != NULL)
+			line[ft_strlen(line) - 1] = '\0';
+	}
+	return (line);
 }
 
 int	main(void)
@@ -101,24 +47,13 @@ int	main(void)
 	t_token	token;
 	char	*line;
 
-	token.c_args = NULL;
 	if (isatty(0))
 		print_header();
-	token.envp = copy_env();
-	token.exitstat = 0;
-	token.fdin = -1;
-	token.fdout = -1;
+	token_create(&token);
 	while (true)
 	{
 		signals_default();
-		if (isatty(0))
-			line = readline(PROMPT " ");
-		else
-		{
-			line = get_next_line(0);
-			if (line != NULL)
-				line[ft_strlen(line) - 1] = '\0';
-		}
+		line = main_readline();
 		if (line == NULL)
 		{
 			line = "exit";

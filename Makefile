@@ -17,7 +17,7 @@ NAME = minishell
 SRC = main.c signals.c signals_execution.c str.c str_2.c parse.c builtin.c \
 	  unset.c signals_default.c syntax.c utils.c tokenizer.c token.c pwd.c \
 	  pipe.c exec.c file.c environment.c cd.c echo.c env.c exit.c export.c \
-	  utils_is_identifier.c utils_strings.c ft_getenv.c
+	  utils_is_identifier.c utils_strings.c ft_getenv.c header.c
 
 # The header files.
 HDR = signals.h syntax.h utils.h token.h exec.h file.h builtin.h pwd.h echo.h \

@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 17:37:35 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/15 20:16:36 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/15 20:25:02 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,24 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <unistd.h>
 
 #include "libft.h"
 
 #include "signals.h"
 #include "token.h"
-#include "unistd.h"
+#include "utils.h"
+
+void	token_create(t_token *self)
+{
+	if (self == NULL)
+		return ;
+	self->c_args = NULL;
+	self->envp = copy_env();
+	self->exitstat = 0;
+	self->fdin = -1;
+	self->fdout = -1;
+}
 
 int	token_check_eof(char *line, char *str)
 {
