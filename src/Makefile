@@ -42,7 +42,7 @@ O_P = ./bin
 OBJ = $(addprefix $(O_P)/,$(SRC:.c=.o))
 
 # The flags to be used during compilation.
-CFLAGS = -Wall -Werror -Wextra $(INC) -g #-Ofast
+CFLAGS = -Wall -Werror -Wextra $(INC) -Ofast
 
 # The includes for the project.
 INC = -I. -I$(HOME)/.brew/opt/readline/include -I$(LFT_P) -I$(GNL_P)
