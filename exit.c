@@ -6,7 +6,7 @@
 /*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:00:25 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 20:01:22 by mhahn            ###   ########.fr       */
+/*   Updated: 2022/02/16 02:46:25 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	builtin_exit(char **argv, t_token *token)
 		else
 			token->exitstat = ft_atoi(argv[1]);
 	}
-	if (!isatty(0))
-		(void) get_next_line(0);
 	exit(utils_free_token(token, 2));
 	return (0);
 }
