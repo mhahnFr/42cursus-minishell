@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <signal.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -100,18 +99,7 @@ int	tokenizer_apply_or_and(t_token *token)
 		token->str = &token->str[pos + 1 - 2];
 		return (tokenizer_func(token));
 	}
-	token->strlen = (pos - 1);
-	if (pos != 0)
-	{
-		if (token->fdin == -1)
-			token->tmp_fdin = -1;
-		else
-			token->tmp_fdin = dup(token->fdin);
-		if (token->fdout == -1)
-			token->tmp_fdout = -1;
-		else
-			token->tmp_fdout = dup(token->fdout);
-	}
+	tokenizer_apply_or_and_2(token, pos);
 	return (tokenizer_func(token));
 }
 

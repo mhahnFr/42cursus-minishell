@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhahn <mhahn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,19 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
+#include <unistd.h>
 
-# include "token.h"
+#include "token.h"
 
-void	tokenizer_apply_or_and_2(t_token *token, int pos);
-
-/*
- * Splits the token string into parts and does a reverse call until
- * no more splitting is needed it then runs the commands.
- * Returns 1 for split or succesfulls run.
- * Returns 0 for failed comand run.
- */
-int		tokenizer_func(t_token *token);
-
-#endif
+void	tokenizer_apply_or_and_2(t_token *token, int pos)
+{
+	token->strlen = (pos - 1);
+	if (pos != 0)
+	{
+		if (token->fdin == -1)
+			token->tmp_fdin = -1;
+		else
+			token->tmp_fdin = dup(token->fdin);
+		if (token->fdout == -1)
+			token->tmp_fdout = -1;
+		else
+			token->tmp_fdout = dup(token->fdout);
+	}
+}
