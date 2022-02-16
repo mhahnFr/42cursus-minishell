@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -17,6 +18,7 @@
 
 #include "libft.h"
 
+#include "builtin.h"
 #include "parse.h"
 #include "pipe.h"
 #include "tokenizer.h"
@@ -59,6 +61,8 @@ int	tokenizer_apply_parenthesis(t_token *token)
 		return (1);
 	if (0 == child)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		while (token->str[token->strlen] != ')')
 			token->strlen--;
 		token->str[token->strlen] = '\0';
@@ -80,6 +84,8 @@ int	tokenizer_apply_or_and(t_token *token)
 	if (pos == 1 && ((token->exitstat != 0 && token->str[0] == '|')
 			|| (token->exitstat == 0 && token->str[0] == '&')))
 	{
+		token->tmp_fdin = token->fdin;
+		token->tmp_fdout = token->fdout;
 		token->str = &token->str[2];
 		token->strlen = ft_strlen(token->str);
 		return (tokenizer_func(token));
@@ -95,6 +101,17 @@ int	tokenizer_apply_or_and(t_token *token)
 		return (tokenizer_func(token));
 	}
 	token->strlen = (pos - 1);
+	if (pos != 0)
+	{
+		if (token->fdin == -1)
+			token->tmp_fdin = -1;
+		else
+			token->tmp_fdin = dup(token->fdin);
+		if (token->fdout == -1)
+			token->tmp_fdout = -1;
+		else
+			token->tmp_fdout = dup(token->fdout);
+	}
 	return (tokenizer_func(token));
 }
 

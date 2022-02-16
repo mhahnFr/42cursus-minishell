@@ -17,6 +17,10 @@
 
 # include "token.h"
 
+void	builtin_close_fds(t_token *token, int *i, int *j);
+
+void	builtin_replace_fds(int i, int j);
+
 /*
  * Returns wether the command string of the given token consists of the name of
  * a builtin.

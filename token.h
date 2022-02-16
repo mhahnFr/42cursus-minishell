@@ -27,6 +27,8 @@ typedef struct s_token {
 	char			*lptr;
 	int				fdin;
 	int				fdout;
+	int				tmp_fdout;
+	int				tmp_fdin;
 	t_heredoc		*heredoc;
 }				t_token;
 

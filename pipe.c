@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -60,6 +61,8 @@ void	pipe_split_heredoc(t_token *token, int childno, int len)
 	int			i;
 	int			j;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	i = 0;
 	while (token->str[i] != '\0')
 	{
@@ -87,7 +90,7 @@ pid_t	pipe_childs(int childno, t_token *token, int len, int pipe_fds[2])
 	pipe_split_heredoc(token, childno, len);
 	if (childno == 0 && 0 == child)
 	{
-		token->strlen = len - 1;
+		token->strlen = len;
 		token->str[token->strlen] = '\0';
 		if (token->fdout != -1)
 			close(token->fdout);
