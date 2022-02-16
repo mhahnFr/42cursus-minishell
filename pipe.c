@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:01:03 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/16 16:18:27 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/16 17:29:07 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	pipe_func(t_token *token)
 	int		len;
 	pid_t	child1;
 	pid_t	child2;
-	int		status;
 
 	len = pipe_check(token);
 	if (pipe(pipe_fds) == -1)
@@ -126,10 +125,12 @@ int	pipe_func(t_token *token)
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
 	waitpid(child1, NULL, 0);
-	waitpid(child2, &status, 0);
-	if (WIFEXITED(status))
-		token->exitstat = WEXITSTATUS(status);
+	waitpid(child2, &len, 0);
+	if (WIFEXITED(len))
+		token->exitstat = WEXITSTATUS(len);
 	else
-		token->exitstat = -1;
-	return (utils_free_token(token, 1));
+		token->exitstat = 1;
+	while (token->strlen != 0)
+		token_move_one_char(token);
+	return (tokenizer_func(token));
 }
