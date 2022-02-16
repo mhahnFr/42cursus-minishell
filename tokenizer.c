@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 04:35:11 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/16 17:14:03 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/16 19:55:25 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	tokenizer_apply_or_and(t_token *token)
 	if (pos == 1 && ((token->exitstat != 0 && token->str[0] == '|')
 			|| (token->exitstat == 0 && token->str[0] == '&')))
 	{
-		token->tmp_fdin = token->fdin;
-		token->tmp_fdout = token->fdout;
+		token->fdin = token->tmp_fdin;
+		token->fdout = token->tmp_fdout;
 		token->str = &token->str[2];
 		token->strlen = ft_strlen(token->str);
 		return (tokenizer_func(token));
