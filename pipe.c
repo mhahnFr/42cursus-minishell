@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:01:03 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/15 22:08:53 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/16 16:18:27 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	pipe_skip_qtm_and_move(char *str)
 
 	i = 1;
 	if (str[0] == '"' || str[0] == '\'')
-		while (str[i] != str[0] && str[i] != '\0')
+		while (str[i] != str[0])
 			i++;
-	if ((str[i] == '"' || str[i] == '\'') && i != 1)
+	if (str[0] == '"' || str[0] == '\'')
 		i++;
 	return (i);
 }
