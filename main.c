@@ -46,7 +46,8 @@ static void	main2(char *line, t_token *token)
 {
 	if (!utils_only_whitespace(line))
 	{
-		add_history(line);
+		if (isatty(0))
+			add_history(line);
 		if (syntax_check(line) == 0)
 		{
 			token->strlen = ft_strlen(line);
