@@ -38,9 +38,6 @@ GNL_D = $(GNL_P)/libgnl.a
 # the path to the object files.
 O_P = ./bin
 
-# The folder containing the testing script.
-T_F = ./tests
-
 # The compiled source files.
 OBJ = $(addprefix $(O_P)/,$(SRC:.c=.o))
 
@@ -64,10 +61,6 @@ norm:
 # Runs the executable.
 run: $(NAME)
 	./$(NAME)
-
-# Runs the tester.
-test: $(NAME)
-	cd $(T_F) && ./tester.sh a
 
 # Calls the makefile of the libft.
 $(LFT_D):
@@ -110,4 +103,4 @@ fclean: clean
 re: fclean all
 
 # A list with all always dirty rules.
-.PHONY: all clean flcean re bonus norm run test
+.PHONY: all clean flcean re bonus norm run
