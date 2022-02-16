@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:02:09 by mhahn             #+#    #+#             */
-/*   Updated: 2022/02/16 16:26:23 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/16 16:35:00 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,13 @@ void	str_copy_chars(t_token *token, char *dst)
 				&& token->str[0] != '>') || c == '"' || c == '\'')
 		&& 0 < token->strlen)
 	{
-		if (c != '\'' && c != '"')
-			i = 1;
-		else if (c == token->str[0])
-			c = token->str[1];
+		if ((token->str[0] == '\'' || token->str[0] == '"')
+			&& (c == '"' || c == '\''))
+			c = ' ';
 		str_copy_chars_token(token, &dst, c);
-		if (i == 1)
+		if ((token->str[0] == '\'' || token->str[0] == '"')
+			&& c != '"' && c != '\'' )
 			c = token->str[0];
-		if (i == 1)
-			i = !i;
 		token_move_one_char(token);
 	}
 }
