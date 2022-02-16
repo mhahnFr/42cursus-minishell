@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "libft.h"
+#include "get_next_line.h"
 
 #include "exit.h"
 #include "utils.h"
@@ -57,6 +59,8 @@ int	builtin_exit(char **argv, t_token *token)
 		else
 			token->exitstat = ft_atoi(argv[1]);
 	}
+	if (!isatty(0))
+		(void) get_next_line(0);
 	exit(utils_free_token(token, 2));
 	return (0);
 }
