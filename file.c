@@ -59,6 +59,7 @@ void	file_write(t_token *token)
 	if (token->fdout != -1)
 		close(token->fdout);
 	token->fdout = i;
+	free(filestr);
 }
 
 void	file_append(t_token *token)
