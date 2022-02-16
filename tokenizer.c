@@ -6,7 +6,7 @@
 /*   By: mnies <mnies@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 04:35:11 by mnies             #+#    #+#             */
-/*   Updated: 2022/02/15 20:16:55 by mnies            ###   ########.fr       */
+/*   Updated: 2022/02/16 17:14:03 by mnies            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	tokenizer_apply_or_and(t_token *token)
 		pos = tokenizer_check_or_and(token);
 		if (0 == pos)
 			return (token->exitstat);
-		token->str = &token->str[pos + 1];
+		token->str = &token->str[pos + 1 - 2];
 		return (tokenizer_func(token));
 	}
 	token->strlen = (pos - 1);
