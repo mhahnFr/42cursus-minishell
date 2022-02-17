@@ -15,5 +15,6 @@ improvements, however, this project will not be developed any further.
 
 © 2022 [nimichi], [mhahnFr].
 
+[42 school]: https://www.42heilbronn.de/learncoderepeat
 [mhahnFr]: https://www.github.com/mhahnFr
 [nimichi]: https://www.github.com/nimichi
