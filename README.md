@@ -13,8 +13,15 @@ of the line is reached.
 We did this project within one month. There may of course still be room for
 improvements, however, this project will not be developed any further.
 
+> As all other C projects at the [42 school], the code has to written in accordance
+> with the [norm]:
+> - Only 25 lines per function,
+> - only 5 functions per file,
+> - usage of only the allowed external functions.
+
 © 2022 [nimichi], [mhahnFr].
 
 [42 school]: https://www.42heilbronn.de/learncoderepeat
 [mhahnFr]: https://www.github.com/mhahnFr
 [nimichi]: https://www.github.com/nimichi
+[norm]: https://www.github.com/42School/norminette
